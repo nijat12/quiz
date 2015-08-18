@@ -22,6 +22,7 @@ var Model;
         ;
         Question.prototype.setValues = function (values) { this.values = values; };
         ;
+        //function to convert to JSON from Object
         Question.prototype.toString = function () {
             var str = '{' + '"label"' + ': "' + this.label + '", ' +
                 '"type"' + ': "' + this.type + '", ';
