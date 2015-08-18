@@ -5,7 +5,7 @@ version 0.11.1.
 
 ## Build & development
 
-Run 'bower install' and 'npm install'
+Run 'bower install' and 'npm install' to build  
 Run `grunt serve` for preview.
 
 ## Testing
