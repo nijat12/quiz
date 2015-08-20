@@ -10,18 +10,12 @@ var Model;
         }
         //Getters
         Question.prototype.getLabel = function () { return this.label; };
-        ;
         Question.prototype.getType = function () { return this.type; };
-        ;
         Question.prototype.getValues = function () { return this.values; };
-        ;
         //Setters
         Question.prototype.setLabel = function (label) { this.label = label; };
-        ;
         Question.prototype.setType = function (type) { this.type = type; };
-        ;
         Question.prototype.setValues = function (values) { this.values = values; };
-        ;
         //function to convert to JSON from Object
         Question.prototype.toString = function () {
             var str = '{' + '"label"' + ': "' + this.label + '", ' +
@@ -47,7 +41,7 @@ var Model;
             var label, type, values;
             if (o) {
                 if (o.hasOwnProperty('label') && o.label) {
-                    if (typeof o.label != 'string') {
+                    if (typeof o.label !== 'string') {
                         throw new Error('label from JSON has to be a String');
                     }
                     else {
@@ -58,7 +52,7 @@ var Model;
                     throw new Error('Missing label from JSON');
                 }
                 if (o.hasOwnProperty('type') && o.type) {
-                    if (typeof o.type != 'string') {
+                    if (typeof o.type !== 'string') {
                         throw new Error('type from JSON has to be a String');
                     }
                     else {

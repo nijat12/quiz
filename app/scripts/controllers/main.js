@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the quizApp
  */
-angular.module('quizApp')
+app
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
