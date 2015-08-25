@@ -4,46 +4,62 @@
 
 module Model{
   export class Question {
-    private label:   string;
-    private type:    string;
-    private values:  string[];
+    private id           : string;
+    private label        : string;
+    private description  : string;
+    private date         : Date;
+    private type         : string;
+    private configuration: any[];
 
-
-      constructor(label:string, type:string, values?:string[]) {
-        this.label = label;
-        this.type = type;
-        this.values = values;
-      }
+    //Constructors
+    constructor(label:string, description:string, type:string, configuration:any[], id?:string, date?:Date) {
+      this.id            = id;
+      this.label         = label;
+      this.description   = description;
+      this.date          = date;
+      this.type          = type;
+      this.configuration = configuration;
+    }
 
     //Getters
-    public getLabel   (): string   { return this.label}
-    public getType    (): string   { return this.type}
-    public getValues  (): string[] { return this.values}
+    public getId             (): string   { return this.id}
+    public getLabel          (): string   { return this.label}
+    public getDescription    (): string   { return this.description}
+    public getDate           (): Date     { return this.date}
+    public getType           (): string   { return this.type}
+    public getConfiguration  (): any[]    { return this.configuration}
 
     //Setters
-    public setLabel   (label:  string )   { this.label  = label}
-    public setType    (type:   string)    { this.type   = type}
-    public setValues  (values: string[])  { this.values = values}
+    public setLabel          (label        : string)      { this.label  = label}
+    public setDescription    (description  : string)      { this.description  = description}
+    public setType           (type         : string)      { this.type   = type}
+    public setConfiguration  (configuration: any[] )      { this.configuration = configuration}
 
 
     //function to convert to JSON from Object
     public toString ()  : string {
-      let str: string = '{' + '"label"'     + ': "' + this.label    + '", ' +
-        '"type"'     + ': "' + this.type     + '", ';
 
-      if(this.values.length === 1){
-        str += '"values"'      + ': "' + this.values[0] + '"}';
+      let str: string = '{' + '"id"'         + ': "' + this.id          + '", ' +
+                              '"label"'      + ': "' + this.label       + '", ' +
+                              '"description"'+ ': "' + this.description + '", ' +
+                              '"date"'       + ': "' + this.date        + '", ' +
+                              '"type"'       + ': "' + this.type        + '", ';
+
+      if(this.configuration.length === 1){
+        str += '"configuration"'      + ': "' + this.configuration[0] + '"}';
       }
       else {
-        str += '"values":[';
-        for (let i: number = 0, len: number = this.values.length; i < len; i+=1){
-          str += '"'+ this.values[i] +'"';
-          if(i - 1 === len){
-            str += ']}';
-          }
-          else {
-            str += ', ';
-          }
+        str += '"configuration":[';
+        for (let i: number = 0, len: number = this.configuration.length; i < len; i+=1){
+          str += '"'+ this.configuration[i] +'"';
+          //if(i - 1 === len){
+          //  str += ']}';
+          //}
+          //else {
+          //  str += ', ';
+          //}
+
+          str += (i - 1 === len) ? ']}' : ', ';
         }
       }
 
@@ -51,17 +67,39 @@ module Model{
     }
 
     public static fromJson(o: any) {
-      let label  : string,
-          type   : string,
-          values : string[];
+      let id            : string,
+          label         : string,
+          description   : string,
+          date          : Date,
+          type          : string,
+          configuration : any[];
 
       if(o) {
+
+        if(o.hasOwnProperty('id') && o.id){
+          if (typeof o.id !== 'string') {throw new Error('id from JSON has to be a String');}
+          else { id = o.id; }
+        }
+
 
         if(o.hasOwnProperty('label') && o.label){
           if (typeof o.label !== 'string') {throw new Error('label from JSON has to be a String');}
           else { label = o.label; }
         }
         else { throw new Error('Missing label from JSON');}
+
+
+        if(o.hasOwnProperty('description') && o.description){
+          if (typeof o.description !== 'string') {throw new Error('description from JSON has to be a String');}
+          else { description = o.description; }
+        }
+        else { throw new Error('Missing description from JSON');}
+
+
+        if(o.hasOwnProperty('date') && o.date){
+          if (o.date instanceof Date) {date = o.date;}
+          else { throw new Error('date from JSON has to be a Date'); }
+        }
 
 
         if(o.hasOwnProperty('type') && o.type){
@@ -72,10 +110,11 @@ module Model{
 
 
         //Need to figure out a better way of checking if it is a string[]
-        if(o.hasOwnProperty('values') && o.values){
-          //if (typeof o.values != 'string') {new Model.ServiceError('0001', 'label from Json has to be a String');}
-          values = o.values;
+        if(o.hasOwnProperty('configuration') && o.configuration){
+          //if (typeof o.configuration != 'string') {new Model.ServiceError('0001', 'label from Json has to be a String');}
+          configuration = o.configuration;
         }
+        else { throw new Error('Missing configuration from JSON');}
 
       }
       else {
@@ -84,8 +123,11 @@ module Model{
 
       return new Model.Question(
         label,
+        description,
         type,
-        values
+        configuration,
+        id,
+        date
       );
     }
   }
