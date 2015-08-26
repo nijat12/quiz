@@ -20,6 +20,8 @@ public class QuizQuestion implements Serializable {
 
     private Object configuration;
 
+   // private List<MediaFile> mediaFiles
+
     public QuizQuestion() {
 
     }
