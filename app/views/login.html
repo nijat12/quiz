@@ -1,0 +1,39 @@
+<div class="container" style="margin: auto; top:30%; left:0; bottom:0; right:0; position: absolute;">
+  <div class="fm-panel " style="text-align: center;" ng-cloak>
+
+    <div class="row">
+      <form class="form-horizontal  col-md-6 col-md-offset-3">
+        <fieldset>
+          <legend>Login</legend>
+
+          <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+              <input type="text" ng-pattern="EMAIL" class="form-control" id="email" ng-model="email" placeholder="Email" style="padding: 14px;">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+              <input type="password" class="form-control" id="password" ng-model="password" placeholder="Password" style="padding: 14px;">
+            </div>
+          </div>
+
+          <!--<legend>-->
+          <button type="button" class="btn btn-danger square-btn-adjust" ui-sref="header.createQuiz">Login</button>
+          <!--</legend>-->
+
+          <legend>
+            OR
+          </legend>
+
+          <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>-->
+
+          <div style="margin-top:10px"><label>{{error}}</label></div>
+
+        </fieldset>
+      </form>
+    </div>
+    <a ui-sref="registration">Not have an account? click here</a>
+
+  </div>
+</div>
