@@ -1,42 +1,93 @@
 <div class="row marketing">
+
+
+
   <div class="panel panel-danger">
     <div class="panel-heading">
-      <div class="input-group full-width">
+      <div class="input-group" style="width: 100%;">
         <input type="text" class="form-control" placeholder="Question" aria-describedby="basic-addon1">
-        </div>
-      <!--<button type="button" class="btn btn-success" style="float: right">+</button>-->
+      </div>
     </div>
 
 
     <div class="panel-body">
 
       <ul>
-        <div class="btn-group" role="group">
+        <div class="btn-group" role="group" ng-model="mainSelect">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Question Type
+            {{mainSelect}}
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a>Multiple Choice</a></li>
-            <li><a>Multi Select</a></li>
-            <li><a>Open</a></li>
+            <li ng-click="mainSelect='Multiple Choice'"><a>Multiple Choice</a></li>
+            <li ng-click="mainSelect='Multi Select'"><a>Multi Select</a></li>
+            <li ng-click="mainSelect='Open'"><a>Open</a></li>
           </ul>
         </div>
       </ul>
+      <!--<ul>-->
+        <!--<select class="selectpicker" ng-model="mainSelect">-->
+          <!--<option value="multi">Multiple Choice</option>-->
+          <!--<option value="multi">Multi Select</option>-->
+          <!--<option value="field">Open</option>-->
+        <!--</select>-->
+      <!--</ul>-->
 
 
-      <!--Multipple Choice and MultiSelect-->
-      <div class="col-lg-12">
+      <!--Multipple Choice-->
+      <div class="col-lg-12" ng-show="mainSelect==='Multiple Choice'">
         <hr>
         <div class="col-lg-6">
             <ul>
-              <div class="input-group full-width">
+              <div class="input-group">
                 <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="radio">
+                </span>
               </div>
             </ul>
             <ul>
-              <div class="input-group full-width">
+              <div class="input-group">
                 <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="radio">
+                </span>
+              </div>
+            </ul>
+
+
+            <ul>
+              <div class="btn-group" role="group" aria-label="">
+                <button type="button" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger" style="margin-left: 10px;">
+                  <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                </button>
+              </div>
+            </ul>
+        </div>
+      </div>
+
+
+      <!--MultiSelect-->
+      <div class="col-lg-12" ng-show="mainSelect==='Multi Select'">
+        <hr>
+        <div class="col-lg-6">
+            <ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="checkbox">
+                </span>
+              </div>
+            </ul>
+            <ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="checkbox">
+                </span>
               </div>
             </ul>
 
@@ -58,10 +109,10 @@
 
 
       <!--Field-->
-      <div class="col-lg-12">
+      <div class="col-lg-12" ng-show="mainSelect==='Open'">
 
         <hr>
-        <ul>
+        <ul style="float: left;">
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Field Type
@@ -75,7 +126,7 @@
         </ul>
 
 
-        <div class="col-lg-6">
+        <div class="col-lg-6" style="float: left;">
           <ul>
             <div class="input-group full-width">
               <input type="text" class="form-control" placeholder="Character limit (0-5000)" aria-describedby="basic-addon1">
@@ -83,6 +134,8 @@
           </ul>
         </div>
       </div>
+    </div>
+  </div>
 
 
 
@@ -90,16 +143,154 @@
 
 
 
+  <!-- -->
+  <!-- -->
+  <!-- -->
+  <!-- -->
+  <!-- -->
+  <!--Copy of the same-->
+  <div class="panel panel-danger" ng-show="showExtra==='yes'">
+    <div class="panel-heading">
+      <div class="input-group" style="width: 100%;">
+        <input type="text" class="form-control" placeholder="Question" aria-describedby="basic-addon1">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-danger square-btn-adjust" ng-click="showExtra='no'">Delete</button>
+          </span>
+      </div>
+    </div>
+
+
+    <div class="panel-body">
+
+      <ul>
+        <div class="btn-group" role="group" ng-model="mainSelect2">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{mainSelect2}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-click="mainSelect2='Multiple Choice'"><a>Multiple Choice</a></li>
+            <li ng-click="mainSelect2='Multi Select'"><a>Multi Select</a></li>
+            <li ng-click="mainSelect2='Open'"><a>Open</a></li>
+          </ul>
+        </div>
+      </ul>
+      <!--<ul>-->
+        <!--<select class="selectpicker" ng-model="mainSelect">-->
+          <!--<option value="multi">Multiple Choice</option>-->
+          <!--<option value="multi">Multi Select</option>-->
+          <!--<option value="field">Open</option>-->
+        <!--</select>-->
+      <!--</ul>-->
+
+
+      <!--Multipple Choice-->
+      <div class="col-lg-12" ng-show="mainSelect2==='Multiple Choice'">
+        <hr>
+        <div class="col-lg-6">
+            <ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="radio">
+                </span>
+              </div>
+            </ul>
+            <ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="radio">
+                </span>
+              </div>
+            </ul>
+
+
+            <ul>
+              <div class="btn-group" role="group" aria-label="">
+                <button type="button" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger" style="margin-left: 10px;">
+                  <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                </button>
+              </div>
+            </ul>
+        </div>
+      </div>
+
+
+      <!--MultiSelect-->
+      <div class="col-lg-12" ng-show="mainSelect2==='Multi Select'">
+        <hr>
+        <div class="col-lg-6">
+            <ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="checkbox">
+                </span>
+              </div>
+            </ul>
+            <ul>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">
+                <span class="input-group-addon">
+                  <input type="checkbox">
+                </span>
+              </div>
+            </ul>
+
+
+            <ul>
+              <div class="btn-group" role="group" aria-label="">
+                <button type="button" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger" style="margin-left: 10px;">
+                  <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                </button>
+              </div>
+            </ul>
+        </div>
+      </div>
 
 
 
+
+      <!--Field-->
+      <div class="col-lg-12" ng-show="mainSelect2==='Open'">
+
+        <hr>
+        <ul style="float: left;">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Field Type
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a>Single Line</a></li>
+              <li><a>Text Field</a></li>
+            </ul>
+          </div>
+        </ul>
+
+
+        <div class="col-lg-6" style="float: left;">
+          <ul>
+            <div class="input-group full-width">
+              <input type="text" class="form-control" placeholder="Character limit (0-5000)" aria-describedby="basic-addon1">
+            </div>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
 
   <!--Button Grid-->
   <div class="col-lg-2">
-    <button type="button" class="btn btn-danger square-btn-adjust">Add a Question</button>
+    <button type="button" class="btn btn-danger square-btn-adjust" ng-click="showExtra='yes'">Add a Question</button>
   </div>
   <div class="col-lg-10"></div>
 

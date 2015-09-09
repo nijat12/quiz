@@ -36,6 +36,8 @@ module.exports = function(config) {
       'bower_components/lodash/lodash.js',
       'bower_components/pace/pace.js',
       'bower_components/ngDialog/js/ngDialog.js',
+      'bower_components/bootstrap-select/dist/js/bootstrap-select.js',
+      'bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

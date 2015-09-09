@@ -50,6 +50,7 @@ var app = angular
       })
       .state('header.createQuiz', {
         url:'/create',
-        templateUrl: 'views/createQuiz.html'
+        templateUrl: 'views/createQuiz.html',
+        controller: 'createQuizCtrl'
       });
   });
