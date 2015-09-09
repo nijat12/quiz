@@ -52,5 +52,10 @@ var app = angular
         url:'/create',
         templateUrl: 'views/createQuiz.html',
         controller: 'createQuizCtrl'
+      })
+      .state('header.takeQuiz', {
+        url:'/quiz',
+        templateUrl: 'views/takeQuiz.html',
+        controller: 'takeQuizCtrl'
       });
   });
