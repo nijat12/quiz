@@ -12,6 +12,11 @@ app
     function ($scope) {
       $scope.mainSelect = 'Multiple Choice';
       $scope.mainSelect2 = 'Multiple Choice';
+      $scope.xray = 0;
+
+      $scope.xrayToggle = function(){
+        $scope.xray+=1;
+      }
     }
   ]
 );
