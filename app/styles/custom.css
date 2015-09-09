@@ -384,3 +384,11 @@ line-height: 1.428571429;
 .auto-margin {
   margin: auto !important;
 }
+
+.vertical-line {
+  position: fixed;
+  margin-top: 20px;
+  height: 80vh;
+  border-right: 1px inset #000000;
+  z-index: -1;
+}
