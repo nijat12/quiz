@@ -1,4 +1,31 @@
-<div class="row marketing">
+
+<!-- Sidebar -->
+<div id="sidebar-wrapper" ng-class="{ 'sidepanel-open':open, 'sidepanel-closed':!open }" style="z-index: 9;">
+  <ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a class="btn" id="menu-toggle" ng-click="open=!open" style="text-align: left; padding-left: 0;">
+        <i class="fa fa-bars" style="display: inline"></i>
+      </a>
+    </li>
+    <li>
+      <a href="#">Q1
+        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 50px;">
+      </a>
+    </li>
+    <li>
+      <a href="#">Q2
+        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 50px;"></a>
+    </li>
+    <li>
+      <a href="#">Q3
+        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 50px;"></a>
+    </li>
+  </ul>
+</div>
+<!-- /#sidebar-wrapper -->
+
+
+<div class="row marketing" ng-class="{ 'mainpanel-open':open, 'mainpanel-closed':!open }">
   <form class="form-horizontal">
 
     <div class="col-lg-6">
@@ -15,169 +42,10 @@
 
     <div class="col-lg-6">
 
-      <!--Question 1-->
-      <div class="panel panel-danger" style="margin-top: 20px;">
-        <div class="panel-heading">
-          <h3 class="auto-margin">What is this?</h3>
-        </div>
-
-        <div class="panel-body">
-
-          <!--Multipple Choice-->
-          <div class="form-group">
-            <!--<label class="col-md-4 control-label" for="radios">Multiple Radios</label>-->
-            <div class="col-lg-2"></div>
-            <div class="col-md-10">
-              <div class="radio">
-                <label for="radios-0">
-                  <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                  Option one
-                </label>
-              </div>
-              <div class="radio">
-                <label for="radios-1">
-                  <input type="radio" name="radios" id="radios-1" value="2">
-                  Option two
-                </label>
-              </div>
-              <div class="radio">
-                <label for="radios-2">
-                  <input type="radio" name="radios" id="radios-2" value="3">
-                  Option three
-                </label>
-              </div>
-              <div class="radio">
-                <label for="radios-3">
-                  <input type="radio" name="radios" id="radios-3" value="3">
-                  Option four
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Question 2-->
-      <div class="panel panel-danger" style="margin-top: 20px;">
-        <div class="panel-heading">
-          <h3 class="auto-margin">Question 2?</h3>
-        </div>
-
-        <div class="panel-body">
-
-          <!--Multipple Choice-->
-          <div class="form-group">
-            <!--<label class="col-md-4 control-label" for="radios">Multiple Radios</label>-->
-            <div class="col-lg-2"></div>
-            <div class="col-md-10">
-
-              <div class="checkbox">
-                <label for="checkboxes-0">
-                  <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
-                  Option one
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes-1">
-                  <input type="checkbox" name="checkboxes" id="checkboxes-1" value="2">
-                  Option two
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes-2">
-                  <input type="checkbox" name="checkboxes" id="checkboxes-2" value="3">
-                  Option three
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes-3">
-                  <input type="checkbox" name="checkboxes" id="checkboxes-3" value="4">
-                  Option four
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes-4">
-                  <input type="checkbox" name="checkboxes" id="checkboxes-4" value="5">
-                  Option five
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes-5">
-                  <input type="checkbox" name="checkboxes" id="checkboxes-5" value="6">
-                  Option six
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Question 3-->
-      <div class="panel panel-danger" style="margin-top: 20px;">
-        <div class="panel-heading">
-          <h3 class="auto-margin">Question 3?</h3>
-        </div>
-
-        <div class="panel-body">
-
-          <!--Multipple Choice-->
-          <div class="form-group">
-            <!--<label class="col-md-4 control-label" for="radios">Multiple Radios</label>-->
-            <div class="col-lg-2"></div>
-            <div class="col-md-10">
-
-              <div class="checkbox">
-                <label for="checkboxes3-0">
-                  <input type="checkbox" name="checkboxes" id="checkboxes3-0" value="1">
-                  Option one
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes3-1">
-                  <input type="checkbox" name="checkboxes" id="checkboxes3-1" value="2">
-                  Option two
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes3-2">
-                  <input type="checkbox" name="checkboxes" id="checkboxes3-2" value="3">
-                  Option three
-                </label>
-              </div>
-              <div class="checkbox">
-                <label for="checkboxes3-3">
-                  <input type="checkbox" name="checkboxes" id="checkboxes3-3" value="4">
-                  Option four
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!--Question 4-->
-      <div class="panel panel-danger" style="margin-top: 20px;">
-        <div class="panel-heading">
-          <h3 class="auto-margin">Question 4?</h3>
-        </div>
-
-        <div class="panel-body">
-
-          <!--Multipple Choice-->
-          <div class="form-group">
-            <!--<label class="col-md-4 control-label" for="radios">Multiple Radios</label>-->
-            <!--<div class="col-lg-2"></div>-->
-            <div class="col-md-12">
-              <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!--Question 5-->
       <div class="panel panel-danger" style="margin-top: 20px;">
         <div class="panel-heading">
-          <h3 class="auto-margin">Question 5?</h3>
+          <h4 class="auto-margin">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae lorem turpis. Donec imperdiet ex quis turpis bibendum rutrum. Duis aliquet orci vitae tellus posuere luctus vitae ac mauris. Fusce ultrices sodales felis quis mattis. Integer maximus ut enim vel bibendum. Nam feugiat tortor ut vulputate vehicula. Sed vitae tincidunt nisl. Aliquam sit amet facilisis neque. Nulla neque odio, tristique at libero ultricies, iaculis tempor urna. Fusce tellus nisi, rhoncus ac lacinia vel, commodo in erat. Pellentesque et lorem ex. Praesent mollis, erat at elementum venenatis, nisl metus egestas magna, ac feugiat nibh velit vel mauris. Sed at varius nibh.</h4>
         </div>
 
         <div class="panel-body">
@@ -187,7 +55,11 @@
             <!--<label class="col-md-4 control-label" for="radios">Multiple Radios</label>-->
             <!--<div class="col-lg-2"></div>-->
             <div class="col-md-12">
-              <textarea class="form-control" id="textarea" name="textarea" ng-model="myText"></textarea>
+              <textarea class="form-control"
+                        id="textarea"
+                        name="textarea"
+                        ng-model="myText"
+                        style="height: 300px;"></textarea>
               <div>Word Count: <span ng-bind="countOf(myText)"></span>/1500</div>
             </div>
           </div>
@@ -199,9 +71,39 @@
 
       <div class="col-lg-10"></div>
       <div class="col-lg-2">
-        <button type="button" class="btn btn-danger square-btn-adjust" style="float: right;">Submit</button>
+        <button type="button"
+                class="btn btn-danger square-btn-adjust"
+                style="float: right;"
+                data-toggle="modal"
+                data-target="#myModal">Submit</button>
       </div>
 
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+            <h4 class="modal-title" id="myModalLabel">Answer</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row" style="margin: auto; width: 200px;">
+              <img src="./images/x-ray3.jpg" class="img-rounded" alt="X-Ray" width="100%" height="100%">
+            </div>
+            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae lorem turpis. Donec imperdiet ex quis turpis bibendum rutrum. Duis aliquet orci vitae tellus posuere luctus vitae ac mauris. Fusce ultrices sodales felis quis mattis. Integer maximus ut enim vel bibendum. Nam feugiat tortor ut vulputate vehicula. Sed vitae tincidunt nisl. Aliquam sit amet facilisis neque. Nulla neque odio, tristique at libero ultricies, iaculis tempor urna. Fusce tellus nisi, rhoncus ac lacinia vel, commodo in erat. Pellentesque et lorem ex. Praesent mollis, erat at elementum venenatis, nisl metus egestas magna, ac feugiat nibh velit vel mauris. Sed at varius nibh.</h4>
+          </div>
+          <div class="modal-footer">
+            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            <button type="button" class="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#myModal">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </form>
 </div>

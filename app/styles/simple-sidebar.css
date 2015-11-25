@@ -1,0 +1,318 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 50px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    /*width: 50px;*/
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+    padding-right: 50px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 44px;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    /*margin-top: 44px; margin-left: 50px;*/
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    /*color: #999999;*/
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+/*Nijat'sChnage'*/
+.menu-toggle{
+  position: absolute;
+  right: 0;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 50px;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 50px;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+/*--================
+Sidebar
+==================--*/
+
+.sidebar {
+  background: #1d212a;
+  position: absolute;
+  min-height: 100%;
+  width: 240px;
+  padding-top: 60px;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.sidebar h5{
+  margin-top: 20px;
+}
+
+.sidebar-header{
+  color: #6F737E;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0;
+  padding: 10px 10px 5px;
+  text-transform: uppercase;
+}
+
+.sidebar .nav a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sidebar .nav i {
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+.sidebar .nav-pills {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.sidebar .nav-pills > li > a {
+  padding: 9px 10px;
+  font-size: 0.875em;
+}
+
+.sidebar-left a{
+  color: #B3B8C3;
+}
+
+.sidebar-left a:focus,
+.sidebar-left a:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+/*--================
+Sidebar Mini
+==================--*/
+
+.sidebar-mini .sidebar-left .nav > li.open > a {
+  color: #B3B8C3;
+  background-color: transparent;
+}
+
+.sidebar-mini .sidebar-left .nav > li.nav-dropdown-open > a,
+.sidebar-mini .sidebar-left .nav > li:hover > a {
+  color: #1d2939;
+  background-color: #fff;
+}
+
+@media (min-width: 768px) {
+  .sidebar-mini .sidebar .sidebar-header{
+    display: none;
+  }
+
+  .sidebar {
+    display: block;
+  }
+
+  .sidebar-mini .sidebar .nav-pills {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .sidebar-mini .sidebar .nav-pills > li > a > i{
+    width: 23px;
+  }
+
+  .sidebar-mini .sidebar {
+    width: 50px;
+    margin-top: 20px;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .sidebar-mini .sidebar .nav > li > a {
+    padding: 10px 0 10px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar + .main-content-wrapper {
+    margin-left: 240px;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    width: auto;
+  }
+
+  .sidebar-mini .sidebar + .main-content-wrapper {
+    margin-left: 50px;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    left: -240px;
+  }
+
+  .sidebar-opened .sidebar-left {
+    display: block;
+    left: 0;
+  }
+
+  .sidebar-opened .sidebar-left + .main-content-wrapper {
+    left: 240px;
+    overflow: hidden;
+  }
+}
+
+#header .logo, #header button.sidebar-toggle{
+  color: #1d212a;
+}
+
+.sidebar-left .nav > li.active > a{
+  color: #fff;
+  background-color: #00bcd4;
+}
+
+.sidebar-left .nav > li > a:hover{
+  color: #1d2939;
+  background-color: #ffffff;
+}
+
+#main-wrapper {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.sidepanel-open {
+  width: 200px !important;
+}
+.sidepanel-closed {
+  width: 50px !important;
+}
+.mainpanel-open {
+  margin-left: 200px;
+}
+.mainpanel-closed {
+  margin-left: 30px;
+}

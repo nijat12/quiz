@@ -53,6 +53,16 @@ var app = angular
         templateUrl: 'views/createQuiz.html',
         controller: 'createQuizCtrl'
       })
+      .state('header.viewQuizAdmin', {
+        url:'/view/admin',
+        templateUrl: 'views/viewQuizAdmin.html'
+        //controller: 'createQuizCtrl'
+      })
+      .state('header.viewQuizUser', {
+        url:'/view/user',
+        templateUrl: 'views/viewQuizUser.html'
+        //controller: 'createQuizCtrl'
+      })
       .state('header.takeQuiz', {
         url:'/quiz',
         templateUrl: 'views/takeQuiz.html',
