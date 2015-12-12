@@ -17,7 +17,8 @@ var app = angular
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'ngDialog'
+    'ngDialog',
+    'ngFileUpload'
   ])
 
   //.run(['$location', function($location){

@@ -62,8 +62,20 @@
 
     <div style="margin-top: 20px; margin-bottom: 20px; text-align: center;" class="row">
       <!--<div class="col-lg-6">-->
-        <button type="button" class="btn btn-danger square-btn-adjust" ng-click="xrayToggle()">Add an Image/X-Ray</button>
+        <!--<button type="button" class="btn btn-danger square-btn-adjust" ng-click="xrayToggle()">Add an Image/X-Ray</button>-->
+        <button type="button" ngf-select="uploadFiles($files, $invalidFiles)" multiple
+                accept="image/x-png, image/jpeg" ngf-max-height="10000" ngf-max-size="10MB"
+                class="btn btn-danger square-btn-adjust">Add an Image/X-Ray</button>
       <!--</div>-->
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label">Picture<br><h6>(JPG or PNG ONLY)</h6></label>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="file" capture="camera"  id="cameraInput" name="cameraInput">
+        </div>
+      </div>
     </div>
 
   </div>

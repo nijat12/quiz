@@ -12,4 +12,5 @@ app.service('endPointDefinitionService' ,[function () {
   this.apiURL = 'http://10.9.25.180:8182/';
   //this.apiURL = 'http://10.9.25.50:8182/'
   //this.apiURL = 'http://s0020269/'
+  this.s3URL    = '';
 }]);
