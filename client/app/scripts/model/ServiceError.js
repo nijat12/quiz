@@ -12,7 +12,7 @@ var Model;
         ServiceError.prototype.getCode = function () { return this.code; };
         ServiceError.prototype.getMessage = function () { return this.message; };
         //public getContext() : Model.Bits { return this.context; }
-        ServiceError.fromJSON = function (o) {
+        ServiceError.fromJson = function (o) {
             var code, message;
             if (o) {
                 if (o.hasOwnProperty('code')) {

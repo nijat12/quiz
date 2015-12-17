@@ -3,7 +3,7 @@
 'use strict';
 
 module Model {
-  export class ServiceError {
+  export class Explanation {
     private code    : string;
     private message : string;
     //private context : Model.Bits;

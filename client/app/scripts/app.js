@@ -18,7 +18,8 @@ var app = angular
     'ngTouch',
     'ui.router',
     'ngDialog',
-    'ngFileUpload'
+    'ngFileUpload',
+    'base64'
   ])
 
   //.run(['$location', function($location){
