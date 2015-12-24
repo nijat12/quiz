@@ -3,6 +3,7 @@ package medicalquiz.models;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,15 +19,22 @@ public class Quiz {
 
     private String description;
 
-    private HashSet<String> questionIds;
+    private String status;
 
-    private ArrayList<MediaFile> files;
+    private Date created;
 
-    public Quiz(){}
+    private Date updated;
+
+    private List<Case> cases = new ArrayList<Case>();
+
+    public Quiz() {
+
+    }
 
     public String getId() {
         return id;
     }
+
 
 
     public String getName() {
@@ -45,29 +53,35 @@ public class Quiz {
         this.description = description;
     }
 
-
-
-    public List<MediaFile> getFiles() {
-        return files;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFiles(ArrayList<MediaFile> files) {
-        this.files = files;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public boolean addQuestion(String questionId){
-        if(questionIds == null)
-            questionIds = new HashSet<String>();
-
-        return questionIds.add(questionId);
+    public Date getCreated() {
+        return created;
     }
 
-    public boolean deleteQuestion(String questionId){
-        if(questionIds == null)
-           return false;
-
-        return  questionIds.remove(questionId);
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
+    public Date getUpdated() {
+        return updated;
+    }
 
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public List<Case> getCases() {
+        return cases;
+    }
+
+    public void setCases(List<Case> cases) {
+        this.cases = cases;
+    }
 }
