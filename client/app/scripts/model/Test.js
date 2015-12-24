@@ -1,4 +1,5 @@
 /// <reference path='Model.ts' />
+/// <reference path='Case.ts' />
 'use strict';
 var Model;
 (function (Model) {
@@ -35,8 +36,17 @@ var Model;
                 '"name"' + ': "' + this.name + '", ' +
                 '"created"' + ': "' + this.created + '", ' +
                 '"status"' + ': "' + this.status + '", ' +
-                '"updated"' + ': "' + this.updated + '", ' +
-                '"cases"' + ': "' + this.cases + '", ';
+                '"updated"' + ': "' + this.updated + '", ';
+            if (this.cases.length === 1) {
+                str += '"cases"' + ': "' + this.cases[0] + '"}';
+            }
+            else {
+                str += '"cases":[';
+                for (var i = 0, len = this.cases.length; i < len; i += 1) {
+                    str += '"' + this.cases[i] + '"';
+                    str += (i - 1 === len) ? ']}' : ', ';
+                }
+            }
             return str;
         };
         Test.fromJson = function (o) {
@@ -94,13 +104,13 @@ var Model;
                         updated = o.updated;
                     }
                 }
-                //Needs work
                 if (o.hasOwnProperty('cases') && o.cases) {
-                    if (o.cases.constructor !== 'Array') {
-                        throw new Error('2021');
+                    if (Object.prototype.toString.call(o.cases) === '[object Array]') {
+                        //if (o.cases instanceof Case) {
+                        cases = o.cases;
                     }
                     else {
-                        cases = o.cases;
+                        throw new Error('2021');
                     }
                 }
             }

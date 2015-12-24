@@ -11,13 +11,13 @@ module Model {
     private questions:any[];
 
     //Constructor
-    constructor(id:string, status:boolean, questions?:any[], images?:string) {
+    constructor(id:string, status:boolean, images?:any[], questions?:any[]) {
       //Required
       this.id = id;
       this.status = status;
       //Not Required
-      this.questions = questions;
       this.images = images;
+      this.questions = questions;
     }
 
     //Getters
@@ -80,7 +80,7 @@ module Model {
         } else {throw new Error('2031')}
 
 
-        if (o.hasOwnProperty('status') && o.status) {
+        if (o.hasOwnProperty('status')) {
           if (typeof o.status !== 'boolean') {
             throw new Error('2028');
           } else {
@@ -110,8 +110,8 @@ module Model {
       return new Model.Case(
         id,
         status,
-        questions,
-        images)
+        images,
+        questions)
     }
   }
 }

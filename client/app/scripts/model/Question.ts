@@ -12,7 +12,7 @@ module Model{
     private explanations : any[];
 
     //Constructors
-    constructor(id:string, label:string, answer:boolean, explanations:any[], images?:any[]) {
+    constructor(id:string, label:string, answer:boolean, images?:any[], explanations?:any[]) {
       this.id            = id;
       this.label         = label;
       this.answer        = answer;
@@ -89,7 +89,7 @@ module Model{
         else { throw new Error('2040');}
 
 
-        if(o.hasOwnProperty('answer') && o.answer){
+        if(o.hasOwnProperty('answer')){
           if (typeof o.answer !== 'boolean') {
             throw new Error('2036');
           }
@@ -114,9 +114,6 @@ module Model{
           }
           else throw new Error('2038');
         }
-        else {
-          throw new Error('2042');
-        }
 
       }
       else {
@@ -127,8 +124,8 @@ module Model{
         id,
         label,
         answer,
-        explanations,
-        images
+        images,
+        explanations
       );
     }
   }

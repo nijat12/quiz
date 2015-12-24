@@ -119,7 +119,8 @@ module Model {
         }
 
         if (o.hasOwnProperty('cases') && o.cases) {
-          if (o.cases instanceof Case) {
+          if (Object.prototype.toString.call( o.cases ) === '[object Array]') {
+          //if (o.cases instanceof Case) {
             cases = o.cases;
           } else {
             throw new Error('2021');

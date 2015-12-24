@@ -1,4 +1,5 @@
 /// <reference path='Model.ts' />
+/// <reference path='Test.ts' />
 'use strict';
 var Model;
 (function (Model) {
@@ -46,13 +47,31 @@ var Model;
                 '"id"' + ': "' + this.id + '", ' +
                 '"firstName"' + ': "' + this.firstName + '", ' +
                 '"lastName"' + ': "' + this.lastName + '", ' +
-                '"userName"' + ': "' + this.userName + '", ' +
-                '"roles"' + ': "' + this.roles + '", ' +
-                '"institutions"' + ': "' + this.institutions + '", ' +
+                '"userName"' + ': "' + this.userName + '", ';
+            if (this.roles.length === 1) {
+                str += '"roles"' + ': "' + this.roles[0] + '"}';
+            }
+            else {
+                str += '"roles":[';
+                for (var i = 0, len = this.roles.length; i < len; i += 1) {
+                    str += '"' + this.roles[i] + '", ';
+                    str += (i - 1 === len) ? '],' : ', ';
+                }
+            }
+            str += '"institutions"' + ': "' + this.institutions + '", ' +
                 '"address"' + ': "' + this.address + '", ' +
                 '"state"' + ': "' + this.state + '", ' +
-                '"zip"' + ': "' + this.zip + '", ' +
-                '"test"' + ': "' + this.tests + '", ';
+                '"zip"' + ': "' + this.zip + '", ';
+            if (this.tests.length === 1) {
+                str += '"tests"' + ': "' + this.tests[0] + '"}';
+            }
+            else {
+                str += '"tests":[';
+                for (var i = 0, len = this.tests.length; i < len; i += 1) {
+                    str += '"' + this.tests[i] + '"';
+                    str += (i - 1 === len) ? ']}' : ', ';
+                }
+            }
             return str;
         };
         User.fromJson = function (o) {
@@ -102,9 +121,8 @@ var Model;
                 else {
                     throw new Error('2013');
                 }
-                //Needs work
                 if (o.hasOwnProperty('roles') && o.roles) {
-                    if (o.roles.constructor !== 'Array') {
+                    if (Object.prototype.toString.call(o.roles) !== '[object Array]') {
                         throw new Error('2008');
                     }
                     else {
@@ -146,13 +164,13 @@ var Model;
                         zip = o.zip;
                     }
                 }
-                //Needs work
                 if (o.hasOwnProperty('tests') && o.tests) {
-                    if (o.tests.constructor !== 'Array') {
-                        throw new Error('2009');
+                    if (Object.prototype.toString.call(o.tests) === '[object Array]') {
+                        //if (o.tests instanceof Test) {
+                        tests = o.tests;
                     }
                     else {
-                        tests = o.tests;
+                        throw new Error('2009');
                     }
                 }
             }

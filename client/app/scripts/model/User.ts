@@ -190,7 +190,8 @@ module Model {
         }
 
         if (o.hasOwnProperty('tests') && o.tests) {
-          if (o.tests instanceof Test) {
+          if (Object.prototype.toString.call( o.tests ) === '[object Array]') {
+          //if (o.tests instanceof Test) {
             tests = o.tests;
           } else {
             throw new Error('2009');

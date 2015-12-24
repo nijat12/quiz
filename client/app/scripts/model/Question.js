@@ -1,119 +1,110 @@
 /// <reference path='Model.ts' />
+/// <reference path='Explanation.ts' />
 'use strict';
 var Model;
 (function (Model) {
     var Question = (function () {
         //Constructors
-        function Question(label, description, type, configuration, id, date) {
+        function Question(id, label, answer, images, explanations) {
             this.id = id;
             this.label = label;
-            this.description = description;
-            this.date = date;
-            this.type = type;
-            this.configuration = configuration;
+            this.answer = answer;
+            this.images = images;
+            this.explanations = explanations;
         }
         //Getters
         Question.prototype.getId = function () { return this.id; };
         Question.prototype.getLabel = function () { return this.label; };
-        Question.prototype.getDescription = function () { return this.description; };
-        Question.prototype.getDate = function () { return this.date; };
-        Question.prototype.getType = function () { return this.type; };
-        Question.prototype.getConfiguration = function () { return this.configuration; };
+        Question.prototype.getAnswer = function () { return this.answer; };
+        Question.prototype.getImages = function () { return this.images; };
+        Question.prototype.getExplanations = function () { return this.explanations; };
         //Setters
+        Question.prototype.setId = function (id) { this.id = id; };
         Question.prototype.setLabel = function (label) { this.label = label; };
-        Question.prototype.setDescription = function (description) { this.description = description; };
-        Question.prototype.setType = function (type) { this.type = type; };
-        Question.prototype.setConfiguration = function (configuration) { this.configuration = configuration; };
+        Question.prototype.setAnswer = function (answer) { this.answer = answer; };
+        Question.prototype.setImages = function (images) { this.images = images; };
+        Question.prototype.setExplanations = function (explanations) { this.explanations = explanations; };
         //function to convert to JSON from Object
         Question.prototype.toString = function () {
             var str = '{' + '"id"' + ': "' + this.id + '", ' +
                 '"label"' + ': "' + this.label + '", ' +
-                '"description"' + ': "' + this.description + '", ' +
-                '"date"' + ': "' + this.date + '", ' +
-                '"type"' + ': "' + this.type + '", ';
-            if (this.configuration.length === 1) {
-                str += '"configuration"' + ': "' + this.configuration[0] + '"}';
+                '"answer"' + ': "' + this.answer + '", ';
+            if (this.images.length === 1) {
+                str += '"images"' + ': "' + this.images[0] + '"}';
             }
             else {
-                str += '"configuration":[';
-                for (var i = 0, len = this.configuration.length; i < len; i += 1) {
-                    str += '"' + this.configuration[i] + '"';
-                    //if(i - 1 === len){
-                    //  str += ']}';
-                    //}
-                    //else {
-                    //  str += ', ';
-                    //}
+                str += '"images":[';
+                for (var i = 0, len = this.images.length; i < len; i += 1) {
+                    str += '"' + this.images[i] + '"';
+                    str += (i - 1 === len) ? '],' : ', ';
+                }
+            }
+            if (this.explanations.length === 1) {
+                str += '"explanations"' + ': "' + this.explanations[0] + '"}';
+            }
+            else {
+                str += '"explanations":[';
+                for (var i = 0, len = this.explanations.length; i < len; i += 1) {
+                    str += '"' + this.explanations[i] + '"';
                     str += (i - 1 === len) ? ']}' : ', ';
                 }
             }
             return str;
         };
         Question.fromJson = function (o) {
-            var id, label, description, date, type, configuration;
+            var id, label, answer, images, explanations;
             if (o) {
                 if (o.hasOwnProperty('id') && o.id) {
                     if (typeof o.id !== 'string') {
-                        throw new Error('id from JSON has to be a String');
+                        throw new Error('2034');
                     }
                     else {
                         id = o.id;
                     }
                 }
+                else {
+                    throw new Error('2039');
+                }
                 if (o.hasOwnProperty('label') && o.label) {
                     if (typeof o.label !== 'string') {
-                        throw new Error('label from JSON has to be a String');
+                        throw new Error('2035');
                     }
                     else {
                         label = o.label;
                     }
                 }
                 else {
-                    throw new Error('Missing label from JSON');
+                    throw new Error('2040');
                 }
-                if (o.hasOwnProperty('description') && o.description) {
-                    if (typeof o.description !== 'string') {
-                        throw new Error('description from JSON has to be a String');
+                if (o.hasOwnProperty('answer')) {
+                    if (typeof o.answer !== 'boolean') {
+                        throw new Error('2036');
                     }
                     else {
-                        description = o.description;
+                        answer = o.answer;
                     }
                 }
-                else {
-                    throw new Error('Missing description from JSON');
-                }
-                if (o.hasOwnProperty('date') && o.date) {
-                    if (o.date instanceof Date) {
-                        date = o.date;
+                else
+                    throw new Error('2041');
+                if (o.hasOwnProperty('images') && o.images) {
+                    if (Object.prototype.toString.call(o.images) === '[object Array]') {
+                        images = o.images;
                     }
-                    else {
-                        throw new Error('date from JSON has to be a Date');
+                    else
+                        throw new Error('2037');
+                }
+                if (o.hasOwnProperty('explanations') && o.explanations) {
+                    if (o.explanations instanceof Model.Explanation) {
+                        explanations = o.explanations;
                     }
-                }
-                if (o.hasOwnProperty('type') && o.type) {
-                    if (typeof o.type !== 'string') {
-                        throw new Error('type from JSON has to be a String');
-                    }
-                    else {
-                        type = o.type;
-                    }
-                }
-                else {
-                    throw new Error('Missing type from JSON');
-                }
-                //Need to figure out a better way of checking if it is a string[]
-                if (o.hasOwnProperty('configuration') && o.configuration) {
-                    //if (typeof o.configuration != 'string') {new Model.ServiceError('0001', 'label from Json has to be a String');}
-                    configuration = o.configuration;
-                }
-                else {
-                    throw new Error('Missing configuration from JSON');
+                    else
+                        throw new Error('2038');
                 }
             }
             else {
-                throw new Error('missing the object form JSON');
+                throw new Error('2043');
             }
-            return new Model.Question(label, description, type, configuration, id, date);
+            return new Model.Question(id, label, answer, images, explanations);
         };
         return Question;
     })();

@@ -4,35 +4,45 @@
 
 module Model {
   export class Explanation {
-    private code    : string;
-    private message : string;
-    //private context : Model.Bits;
+    private label  : string;
+    private images : any[];
 
-    constructor(code:string, message:string/*, context?:Model.Bits*/) {
-      this.code    = code;
-      this.message = message;
-      //this.context = context;
+    constructor(label:string, images?:any[]) {
+      this.label    = label;
+      this.images   = images;
     }
 
-    public getCode()    : string     { return this.code;    }
-    public getMessage() : string     { return this.message; }
-    //public getContext() : Model.Bits { return this.context; }
+    public getLabel()  : string { return this.label;}
+    public getImages() : any[]  { return this.images;}
 
-    public static fromJson(o:any) : Model.ServiceError {
-      let code    : string,
-        message : string/*,
-        context : Model.Bits*/;
+
+    public setLabel  (label  : string) { this.label  = label}
+    public setImages (images : any[])  { this.images = images}
+
+    public static fromJson(o:any) {
+      let label   : string,
+          images  : any[];
 
       if (o) {
-        if (o.hasOwnProperty('code'))    { code    = o.code;    } else { throw new Error('Expected Property "code"'); }
-        if (o.hasOwnProperty('message')) { message = o.message; } else { throw new Error('Expected Property "message"'); }
-        //if (o.hasOwnProperty('context')) { context = o.context; }
+        if (o.hasOwnProperty('label') && o.label) {
+          if (typeof o.label !== 'string') {throw new Error('2044');}
+          else label    = o.label;
+        }
+        else {
+          throw new Error('2046');
+        }
+
+        if (o.hasOwnProperty('images') && o.images) {
+          if (Object.prototype.toString.call( o.images ) === '[object Array]') {
+            images = o.images;
+          }
+          else throw new Error('2045');
+        }
       }
 
-      return new Model.ServiceError(
-        code,
-        message/*,
-        context*/
+      return new Model.Explanation(
+        label,
+        images
       );
     }
   }
