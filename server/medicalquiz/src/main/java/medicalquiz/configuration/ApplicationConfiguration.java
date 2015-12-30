@@ -14,22 +14,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
 
-
-    @Value("${dynamoId}")
-    String key;
-
-    @Value("${dynamoSecret}")
-    String password;
-
-    @Bean
-    public DynamoDB getDynamoDB(){
-
-        return new DynamoDB(new AmazonDynamoDBClient(
-                new BasicAWSCredentials(key,password)));
-
-    }
-
-
-
-
 }

@@ -13,6 +13,7 @@ public class MedicalquizApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }

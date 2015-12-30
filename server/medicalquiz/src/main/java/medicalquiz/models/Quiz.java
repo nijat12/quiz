@@ -2,10 +2,7 @@ package medicalquiz.models;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by david492000 on 8/25/15.
@@ -25,7 +22,7 @@ public class Quiz {
 
     private Date updated;
 
-    private List<Case> cases = new ArrayList<Case>();
+    private Set<String> cases = new HashSet<String>();
 
     public Quiz() {
 
@@ -77,11 +74,9 @@ public class Quiz {
         this.updated = updated;
     }
 
-    public List<Case> getCases() {
+    public Set<String> getCases() {
         return cases;
     }
 
-    public void setCases(List<Case> cases) {
-        this.cases = cases;
-    }
+
 }
