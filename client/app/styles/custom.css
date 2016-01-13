@@ -406,7 +406,7 @@ line-height: 1.428571429;
 .btn-middle {
   display: block;
   vertical-align: middle;
-  margin-top: 26px;
+  /*margin-top: 26px;*/
 }
 
 .btn-wrapper {
@@ -426,4 +426,16 @@ line-height: 1.428571429;
 
 .completed {
   background-color: #C7F3C7 !important;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: white;
+  width: 190px;
+  margin-left: -18px;
+  border-bottom: 1px solid white;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
 }

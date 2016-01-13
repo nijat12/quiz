@@ -2,26 +2,23 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper" ng-class="{ 'sidepanel-open':open, 'sidepanel-closed':!open }" style="z-index: 9;">
   <ul class="sidebar-nav">
+
+    <li style="color:white;">
+        <h3 style="margin-left: 80px;">Cases</h3>
+    </li>
+
     <li class="sidebar-brand">
       <a class="btn" id="menu-toggle" ng-click="open=!open" style="text-align: left; padding-left: 0;">
         <i class="fa fa-bars" style="display: inline"></i>
       </a>
     </li>
-    <li>
-      <a href="#">Q1
-        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 50px;">
-      </a>
+    <li ng-repeat="case in test.cases">
+      <button class="nav-button" ng-click="changeCase($index)">{{$index + 1}}
+        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 84px;">
+      </button>
     </li>
     <li>
-      <a href="#">Q2
-        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 50px;"></a>
-    </li>
-    <li>
-      <a href="#">Q3
-        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 50px;"></a>
-    </li>
-    <li>
-      <a href="#">+
+      <a ng-click="addCase()">+
         <span style="margin-left: 80px;">Add</span>
       </a>
     </li>
@@ -83,13 +80,20 @@
   </div>
 
 
+
+
+  <!-------------------Vertical Line-->
   <div class="col-lg-1" >
     <div class="vertical-line"> </div>
   </div>
 
 
+  <!-------------------Vertical Line-->
+
+
+
   <div class="col-lg-7">
-    <h1 style="text-align: center;">Question 1</h1><hr>
+    <h1 style="text-align: center;">{{caseIndex + 1}}</h1><hr>
 
 
     <div class="panel panel-danger" style="margin-top: 20px;">

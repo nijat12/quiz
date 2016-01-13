@@ -42,8 +42,8 @@ var app = angular
 
     $stateProvider
       .state('header', {
-        templateUrl: 'views/header.html'
-        //controller: 'headerCtrl'
+        templateUrl: 'views/header.html',
+        controller: 'headerCtrl'
       })
       .state('header.login', {
         url:'/',
@@ -55,18 +55,18 @@ var app = angular
         templateUrl: 'views/createQuiz.html',
         controller: 'createQuizCtrl'
       })
-      .state('header.viewQuizAdmin', {
-        url:'/view/admin',
-        templateUrl: 'views/viewQuizAdmin.html'
-        //controller: 'createQuizCtrl'
+      .state('header.tests', {
+        url:'/view/tests',
+        templateUrl: 'views/tests.html',
+        controller: 'testCtrl'
       })
       .state('header.viewQuizUser', {
         url:'/view/user',
         templateUrl: 'views/viewQuizUser.html'
         //controller: 'createQuizCtrl'
       })
-      .state('header.takeQuiz', {
-        url:'/quiz',
+      .state('header.takeTest', {
+        url:'/test',
         templateUrl: 'views/takeQuiz.html',
         controller: 'takeQuizCtrl'
       });

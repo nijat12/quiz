@@ -31,16 +31,16 @@ var Model;
         User.prototype.getZip = function () { return this.zip; };
         User.prototype.getTests = function () { return this.tests; };
         //Setters
-        User.prototype.setId = function (id) { return this.id; };
-        User.prototype.setFirstName = function (firstName) { return this.firstName; };
-        User.prototype.setLastName = function (lastName) { return this.lastName; };
-        User.prototype.setUserName = function (userName) { return this.userName; };
-        User.prototype.setRoles = function (roles) { return this.roles; };
-        User.prototype.setInstitutions = function (institutions) { return this.institutions; };
-        User.prototype.setAddress = function (address) { return this.address; };
-        User.prototype.setState = function (state) { return this.state; };
-        User.prototype.setZip = function (zip) { return this.zip; };
-        User.prototype.setTests = function (tests) { return this.tests; };
+        User.prototype.setId = function (id) { this.id = id; };
+        User.prototype.setFirstName = function (firstName) { this.firstName = firstName; };
+        User.prototype.setLastName = function (lastName) { this.lastName = lastName; };
+        User.prototype.setUserName = function (userName) { this.userName = userName; };
+        User.prototype.setRoles = function (roles) { this.roles = roles; };
+        User.prototype.setInstitutions = function (institutions) { this.institutions = institutions; };
+        User.prototype.setAddress = function (address) { this.address = address; };
+        User.prototype.setState = function (state) { this.state = state; };
+        User.prototype.setZip = function (zip) { this.zip = zip; };
+        User.prototype.setTests = function (tests) { this.tests = tests; };
         //function to convert to JSON from Object
         User.prototype.toString = function () {
             var str = '{' +

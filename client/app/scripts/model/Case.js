@@ -5,53 +5,74 @@ var Model;
 (function (Model) {
     var Case = (function () {
         //Constructor
-        function Case(id, status, images, questions) {
+        function Case(id, quizId, name, description, status, images, questions) {
             //Required
-            this.id = id;
-            this.status = status;
+            this.id = id || null;
             //Not Required
+            this.quizId = quizId;
+            this.name = name;
+            this.description = description;
+            this.status = status;
             this.images = images;
             this.questions = questions;
         }
         //Getters
         Case.prototype.getId = function () { return this.id; };
+        Case.prototype.getQuizId = function () { return this.quizId; };
+        Case.prototype.getName = function () { return this.name; };
+        Case.prototype.getDescription = function () { return this.description; };
         Case.prototype.getStatus = function () { return this.status; };
         Case.prototype.getImages = function () { return this.images; };
         Case.prototype.getQuestions = function () { return this.questions; };
         //Setters
-        Case.prototype.setId = function (id) { return this.id; };
-        Case.prototype.setStatus = function (status) { return this.status; };
-        Case.prototype.setImages = function (images) { return this.images; };
-        Case.prototype.setQuestions = function (questions) { return this.questions; };
+        Case.prototype.setId = function (id) { this.id = id; };
+        Case.prototype.setQuizId = function (quizId) { this.quizId = quizId; };
+        Case.prototype.setName = function (name) { this.name = name; };
+        Case.prototype.setDescription = function (description) { this.description = description; };
+        Case.prototype.setStatus = function (status) { this.status = status; };
+        Case.prototype.setImages = function (images) { this.images = images; };
+        Case.prototype.setQuestions = function (questions) { this.questions = questions; };
         //function to convert to JSON from Object
         Case.prototype.toString = function () {
             var str = '{' +
                 '"id"' + ': "' + this.id + '", ' +
-                '"status"' + ': "' + this.status + '", ';
-            if (this.images.length === 1) {
-                str += '"images"' + ': "' + this.images[0] + '"}';
-            }
-            else {
-                str += '"images":[';
-                for (var i = 0, len = this.images.length; i < len; i += 1) {
-                    str += '"' + this.images[i] + '"';
-                    str += (i - 1 === len) ? '],' : ', ';
+                '"quizId"' + ': "' + this.quizId + '", ' +
+                '"name"' + ': "' + this.name + '", ' +
+                '"description"' + ': "' + this.description + '", ' +
+                '"status"' + ': "' + this.status + '"';
+            if (this.images) {
+                if (this.images.length === 1) {
+                    str += ', "images"' + ': "' + this.images[0] + '"';
+                }
+                else {
+                    str += ', "images":[';
+                    for (var i = 0, len = this.images.length; i < len; i += 1) {
+                        str += '"' + this.images[i] + '"';
+                        if (i - 1 != len)
+                            str += ', ';
+                    }
+                    str += ']';
                 }
             }
-            if (this.questions.length === 1) {
-                str += '"questions"' + ': "' + this.questions[0] + '"}';
-            }
-            else {
-                str += '"questions":[';
-                for (var i = 0, len = this.questions.length; i < len; i += 1) {
-                    str += '"' + this.questions[i] + '"';
-                    str += (i - 1 === len) ? ']}' : ', ';
+            if (this.questions) {
+                if (this.questions.length === 1) {
+                    str += ', "questions"' + ': "' + this.questions[0] + '"';
+                }
+                else {
+                    str += ', "questions":[';
+                    for (var i = 0, len = this.questions.length; i < len; i += 1) {
+                        str += '"' + this.questions[i] + '"';
+                        if (i - 1 != len)
+                            str += ', ';
+                    }
+                    str += ']';
                 }
             }
+            str += '}';
             return str;
         };
         Case.fromJson = function (o) {
-            var id, status, images, questions;
+            var id = null, quizId, name, description, status, images, questions;
             if (o) {
                 if (o.hasOwnProperty('id') && o.id) {
                     if (typeof o.id !== 'string') {
@@ -62,10 +83,34 @@ var Model;
                     }
                 }
                 else {
-                    throw new Error('2031');
+                    console.log(o.id);
                 }
-                if (o.hasOwnProperty('status')) {
-                    if (typeof o.status !== 'boolean') {
+                if (o.hasOwnProperty('quizId') && o.quizId) {
+                    if (typeof o.quizId !== 'string') {
+                        throw new Error('2024');
+                    }
+                    else {
+                        quizId = o.quizId;
+                    }
+                }
+                if (o.hasOwnProperty('name') && o.name) {
+                    if (typeof o.name !== 'string') {
+                        throw new Error('2042');
+                    }
+                    else {
+                        name = o.name;
+                    }
+                }
+                if (o.hasOwnProperty('description') && o.description) {
+                    if (typeof o.description !== 'string') {
+                        throw new Error('2047');
+                    }
+                    else {
+                        description = o.description;
+                    }
+                }
+                if (o.hasOwnProperty('status') && o.status) {
+                    if (typeof o.status !== 'string') {
                         throw new Error('2028');
                     }
                     else {
@@ -73,7 +118,6 @@ var Model;
                     }
                 }
                 else {
-                    throw new Error('2032');
                 }
                 if (o.hasOwnProperty('images') && o.images) {
                     if (Object.prototype.toString.call(o.images) !== '[object Array]') {
@@ -95,7 +139,7 @@ var Model;
             else {
                 throw new Error('2033');
             }
-            return new Model.Case(id, status, images, questions);
+            return new Model.Case(id, quizId, name, description, status, images, questions);
         };
         return Case;
     })();

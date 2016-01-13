@@ -45,16 +45,16 @@ module Model {
     public getTests ():        any[]    {return this.tests}
 
     //Setters
-    public setId           (id          : string)   : string   {return this.id}
-    public setFirstName    (firstName   : string)   : string   {return this.firstName}
-    public setLastName     (lastName    : string)   : string   {return this.lastName}
-    public setUserName     (userName    : string)   : string   {return this.userName}
-    public setRoles        (roles       : string[]) : string[] {return this.roles}
-    public setInstitutions (institutions: string)   : string   {return this.institutions}
-    public setAddress      (address     : string)   : string   {return this.address}
-    public setState        (state       : string)   : string   {return this.state}
-    public setZip          (zip         : string)   : string   {return this.zip}
-    public setTests        (tests       : any[])    : any[]    {return this.tests}
+    public setId           (id          : string)   { this.id = id}
+    public setFirstName    (firstName   : string)   { this.firstName = firstName}
+    public setLastName     (lastName    : string)   { this.lastName = lastName}
+    public setUserName     (userName    : string)   { this.userName = userName}
+    public setRoles        (roles       : string[]) { this.roles = roles}
+    public setInstitutions (institutions: string)   { this.institutions = institutions}
+    public setAddress      (address     : string)   { this.address = address}
+    public setState        (state       : string)   { this.state = state}
+    public setZip          (zip         : string)   { this.zip = zip}
+    public setTests        (tests       : any[])    { this.tests = tests}
 
     //function to convert to JSON from Object
     public toString ()  : string {

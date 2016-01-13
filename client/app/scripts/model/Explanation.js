@@ -12,7 +12,7 @@ var Model;
         Explanation.prototype.setLabel = function (label) { this.label = label; };
         Explanation.prototype.setImages = function (images) { this.images = images; };
         Explanation.fromJson = function (o) {
-            var label, images;
+            var label = null, images;
             if (o) {
                 if (o.hasOwnProperty('label') && o.label) {
                     if (typeof o.label !== 'string') {

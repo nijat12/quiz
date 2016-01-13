@@ -8,8 +8,157 @@
  * Controller of the quizApp
  */
 app
-  .controller('createQuizCtrl',['$scope', '$base64', 's3Service',
-    function ($scope, $base64, s3Service) {
+  .controller('createQuizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q',
+    function ($scope, $base64, s3Service, sessionService, $state, casesService, $q) {
+      $scope.test = sessionService.test;
+      $scope.caseIndex = 0;
+      $scope.currentCase = new Model.Case;
+      $scope.saveState = true;
+
+      //Check if there are any Cases
+      if($scope.test.cases && $scope.test.cases.length === 0){
+        $scope.test.cases[0] = '';
+        $scope.saveState = false;
+      }
+
+      //Getting a Case
+      var getCase = function(id) {
+        if(id !== ''){
+          casesService.get(id).then(function (data) {
+            $scope.currentCase = data;
+            console.log(data);
+          }, function (err) {
+            console.log(err);
+          });
+        }
+      };
+
+      //Getting all Cases
+      var getAllCase = function(id) {
+        casesService.getAll(id).then(function(data){
+          //$scope.currentCase = data;
+          console.log(data);
+        },function(err){
+          console.log(err);
+        });
+      };
+
+      //Add new case button
+      $scope.addCase = function () {
+        checkIfSaved().then(function(){
+          addCaseToArray();
+        },function(mssg){
+          if(mssg === 'saved') addCaseToArray();
+        });
+      };
+
+      //Adding new case to Case array
+      var addCaseToArray = function (){
+        $scope.test.cases.push(new Model.Case);
+        $scope.caseIndex = $scope.test.cases.length - 1;
+        $scope.saveState = false;
+        $scope.currentCase = new Model.Case;
+      };
+
+      //Changing the currently viewed Case
+      $scope.changeCase = function (index) {
+        //if ($scope.test.cases[$scope.caseIndex] != index) {
+          checkIfSaved().then(function () {
+            $scope.caseIndex = index;
+            getCase($scope.test.cases[$scope.caseIndex]);
+          }, function (mssg) {
+            if (mssg === 'saved') {
+              $scope.caseIndex = index;
+              getCase($scope.test.cases[$scope.caseIndex]);
+            }
+          });
+        //}
+      };
+
+      //Save if not Saved
+      var checkIfSaved = function () {
+        var deff = $q.defer();
+
+        if($scope.saveState === false) {
+
+          //check to update or save
+          if($scope.currentCase.id && $scope.currentCase.id !== null){
+            console.log("update");
+            $scope.update().then(function () {
+              deff.resolve();
+            }, function () {
+              deff.reject('not');
+            });
+          } else {
+            console.log("save");
+            $scope.save().then(function () {
+              deff.resolve();
+            }, function () {
+              deff.reject('not');
+            });
+          }
+
+        } else deff.reject('saved');
+
+        return deff.promise;
+      };
+
+      //Adds the case to question
+      $scope.save = function () {
+        var def = $q.defer();
+        casesService.add($scope.test.id, $scope.currentCase)
+          .then(function(data){
+            $scope.currentCase = data;
+            $scope.test.cases[$scope.caseIndex] = data.id;
+            $scope.saveState = true;
+            def.resolve();
+          },function(err){
+            console.log(err);
+            def.reject();
+          });
+
+        return def.promise;
+      };
+
+      //Updates the case in question
+      $scope.update = function () {
+        var def = $q.defer();
+
+        if($scope.test.cases[$scope.caseIndex] !== ''){
+          casesService.update($scope.currentCase)
+            .then(function (data) {
+              //$scope.test.cases[$scope.caseIndex] = data;
+              $scope.saveState = true;
+              def.resolve();
+            }, function (err) {
+              console.log(err);
+              def.reject();
+            });
+        }
+
+        return def.promise;
+      };
+
+
+
+      //run it the first time to make sure everything is in order
+      var firstRun = function () {
+        //Test Sanity
+        if($scope.caseIndex === null || $scope.test.cases === undefined){
+          $state.go('header.tests');
+        }
+
+        //See what we are dealing with
+        console.log($scope.test.cases);
+      }();
+
+
+
+
+
+
+
+
       $scope.mainSelect = 'True';
       $scope.mainSelect2 = 'True';
       $scope.xray = 0;
@@ -108,39 +257,6 @@ app
           //});
         });
       };
-
-      $scope.createJson = function () {
-
-        //Explanations
-        var explanation1 = Model.Explanation.fromJson({label: 'Label Test1', images: ['url1', 'url2']});
-        var explanation2 = Model.Explanation.fromJson({label: 'Label Test2', images: ['url1', 'url2']});
-        var explanation3 = Model.Explanation.fromJson({label: 'Label Test3', images: ['url1', 'url2']});
-        var explanation4 = Model.Explanation.fromJson({label: 'Label Test4', images: ['url1', 'url2']});
-        var explanation5 = Model.Explanation.fromJson({label:'Label Test5', images:['url1','url2']});
-
-        //Questions
-        var question1 = Model.Question.fromJson({id:'0000001',label:'Test Test test1', answer:false, images:['url1','url2'], explanations:explanation1});
-        var question2 = Model.Question.fromJson({id:'0000002',label:'Test Test test2', answer:false, images:['url1','url2'], explanations:explanation2});
-        var question3 = Model.Question.fromJson({id:'0000003',label:'Test Test test3', answer:false, images:['url1','url2'], explanations:explanation3});
-        var question4 = Model.Question.fromJson({id:'0000004',label:'Test Test test4', answer:false, images:['url1','url2'], explanations:explanation4});
-        var question5 = Model.Question.fromJson({id:'0000005',label:'Test Test test5', answer:false, images:['url1','url2'], explanations:explanation5});
-
-        //Cases
-        var case1 = Model.Case.fromJson({id:'000001', status:false, images:['url1','url2'], questions:[question1, question2, question3]});
-        var case2 = Model.Case.fromJson({id:'000002', status:false, images:['url1','url2'], questions:[question4, question5]});
-        var case3 = Model.Case.fromJson({id:'000003', status:false, images:['url1','url2'], questions:[question1, question3, question5]});
-
-        //Tests
-        var test1 = Model.Test.fromJson({id:'00001', name:'Test1', created:'01/01/2000', status:'not-taken', updated:'01/01/2015', cases:[case1,case2, case3]});
-        var test2 = Model.Test.fromJson({id:'00002', name:'Test2', created:'01/02/2000', status:'not-taken', updated:'01/02/2015', cases:[case1,case3]});
-
-        //Users
-        var user = Model.User.fromJson({id: '0001', firstName: 'John', lastName: 'Doe', userName: 'johnDoe123', roles: ['admin'], institutions: 'FIU', address: '111 NW 1st St', state: 'FL', zip: '33128', tests:[test1,test2]});
-
-
-        console.log(JSON.stringify(user));
-      };
-      $scope.createJson();
     }
   ]
 );

@@ -20,7 +20,7 @@ module Model {
     public setImages (images : any[])  { this.images = images}
 
     public static fromJson(o:any) {
-      let label   : string,
+      let label   : string = null,
           images  : any[];
 
       if (o) {
