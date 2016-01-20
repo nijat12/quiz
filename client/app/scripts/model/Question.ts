@@ -6,22 +6,25 @@
 module Model{
   export class Question {
     private id           : string;
+    private caseId       : string;
     private label        : string;
     private answer       : boolean;
-    private images       : any[];
-    private explanations : any[];
+    public  images       : any[];
+    public  explanations : any[];
 
     //Constructors
-    constructor(id:string, label:string, answer:boolean, images?:any[], explanations?:any[]) {
-      this.id            = id;
-      this.label         = label;
-      this.answer        = answer;
-      this.images        = images;
-      this.explanations  = explanations;
+    constructor(id:string, caseId:string, label?:string, answer?:boolean, images?:any[], explanations?:any[]) {
+      this.id            = id || null;
+      this.caseId        = caseId;
+      this.label         = label || null;
+      this.answer        = answer || true;
+      this.images        = images || [];
+      this.explanations  = explanations || [];
     }
 
     //Getters
     public getId             (): string   { return this.id}
+    public getCaseId         (): string   { return this.caseId}
     public getLabel          (): string   { return this.label}
     public getAnswer         (): boolean  { return this.answer}
     public getImages         (): any[]    { return this.images}
@@ -29,6 +32,7 @@ module Model{
 
     //Setters
     public setId             (id          : string) { this.id  = id}
+    public setCaseId         (caseId      : string) { this.caseId  = caseId}
     public setLabel          (label       : string) { this.label  = label}
     public setAnswer         (answer      : boolean){ this.answer  = answer}
     public setImages         (images      : any[])  { this.images = images}
@@ -39,35 +43,48 @@ module Model{
     public toString ()  : string {
 
       let str: string = '{' + '"id"'    + ': "' + this.id     + '", ' +
+                              '"caseId"'+ ': "' + this.caseId + '", ' +
                               '"label"' + ': "' + this.label  + '", ' +
-                              '"answer"'+ ': "' + this.answer + '", ';
+                              '"answer"'+ ': '  + this.answer;
 
-      if(this.images.length === 1){
-        str += '"images"'      + ': "' + this.images[0] + '"}';
-      }
-      else {
-        str += '"images":[';
-        for (let i: number = 0, len: number = this.images.length; i < len; i+=1){
-          str += '"'+ this.images[i] +'"';
-          str += (i - 1 === len) ? '],' : ', ';
+
+      if (this.images) {
+        if (this.images.length === 1) {
+          str += ', "images"' + ': "' + this.images[0] + '"';
+        }
+        else {
+          str += ', "images":[';
+          for (let i:number = 0, len:number = this.images.length; i < len; i += 1) {
+            str += '"' + this.images[i] + '"';
+            if(i - 1 != len) str+= ', ';
+          }
+          str+=']';
         }
       }
-      if(this.explanations.length === 1){
-        str += '"explanations"'      + ': "' + this.explanations[0] + '"}';
-      }
-      else {
-        str += '"explanations":[';
-        for (let i: number = 0, len: number = this.explanations.length; i < len; i+=1){
-          str += '"'+ this.explanations[i] +'"';
-          str += (i - 1 === len) ? ']}' : ', ';
+      if (this.explanations) {
+        if (this.explanations.length === 1) {
+          str += ', "explanations"' + ': "' + this.explanations[0] + '"';
+        }
+        else {
+          str += ', "explanations":[';
+          for (let i:number = 0, len:number = this.explanations.length; i < len; i += 1) {
+            str += '"' + this.explanations[i] + '"';
+            if(i - 1 != len) str+= ', ';
+            //str += (i - 1 === len) ? ']}' : ', ';
+          }
+          str+=']';
         }
       }
+
+
+      str+='}';
 
       return str
     }
 
     public static fromJson(o: any) {
-      let id           : string,
+      let id           : string = null,
+          caseId       : string,
           label        : string,
           answer       : boolean,
           images       : any[],
@@ -79,14 +96,18 @@ module Model{
           if (typeof o.id !== 'string') {throw new Error('2034');}
           else { id = o.id; }
         }
-        else {throw new Error('2039')}
+
+        if(o.hasOwnProperty('caseId') && o.caseId){
+          if (typeof o.caseId !== 'string') {throw new Error('2040');}
+          else { caseId = o.caseId; }
+        }
 
 
         if(o.hasOwnProperty('label') && o.label){
           if (typeof o.label !== 'string') {throw new Error('2035');}
           else { label = o.label; }
         }
-        else { throw new Error('2040');}
+        //else { throw new Error('2040');}
 
 
         if(o.hasOwnProperty('answer')){
@@ -97,7 +118,7 @@ module Model{
             answer = o.answer;
           }
         }
-        else throw new Error('2041');
+        //else throw new Error('2041');
 
 
         if(o.hasOwnProperty('images') && o.images){
@@ -109,7 +130,7 @@ module Model{
 
 
         if(o.hasOwnProperty('explanations') && o.explanations){
-          if (o.explanations instanceof Explanation) {
+          if (Object.prototype.toString.call( o.explanations ) === '[object Array]') {
             explanations = o.explanations;
           }
           else throw new Error('2038');
@@ -122,6 +143,7 @@ module Model{
 
       return new Model.Question(
         id,
+        caseId,
         label,
         answer,
         images,

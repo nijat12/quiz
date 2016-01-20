@@ -40,6 +40,9 @@ app
             testsService.createTest($scope.newTest).then(function (data) {
               sessionService.test = data;
               console.log(sessionService.test);
+              $('#myModal').modal('hide');
+              $('body').removeClass('modal-open');
+              $('.modal-backdrop').remove();
               $state.go('header.createQuiz');
             }, function (err) {
               console.log(err);
@@ -93,6 +96,15 @@ app
         $scope.edit = function (index) {
           sessionService.test = $scope.tests[index];
           $state.go('header.createQuiz');
+        };
+
+        $scope.deleteTest = function (index) {
+          testsService.delete($scope.tests[index].id)
+            .then(function(data){
+              console.log(data);
+            },function(err){
+              console.log(err);
+            });
         };
 
 

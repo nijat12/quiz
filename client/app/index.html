@@ -24,8 +24,9 @@
   </head>
   <body ng-app="quizApp">
     <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <loader key="spinner-1"></loader>
 
     <!--&lt;!&ndash; Add your site or application content here &ndash;&gt;-->
     <!--<div class="header">-->
@@ -98,6 +99,8 @@
     <script src="bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/angular-base64/angular-base64.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -118,6 +121,12 @@
         <script src="scripts/services/testsService.js"></script>
         <script src="scripts/services/sessionService.js"></script>
         <script src="scripts/services/casesService.js"></script>
+        <script src="scripts/services/loaderService.js"></script>
+
+        <!--Directives-->
+        <script src="scripts/directives/autoFocus.js"></script>
+        <script src="scripts/directives/ngEnter.js"></script>
+        <script src="scripts/directives/loaderDirective.js"></script>
 
         <!--Models-->
         <script src="scripts/model/Model.js"></script>

@@ -27,4 +27,7 @@ app.service('endPointDefinitionService' ,[function () {
   this.addQuestionUrl = this.testURL + '/cases/:id/questions/add';
   this.addCaseURL = this.testURL + '/:id/cases';
 
+  //delete endpoints
+  this.deleteTestURL = this.testURL + '/:id/';
+
 }]);

@@ -49,7 +49,7 @@ app.factory('errorCode', [function () {
     2037: 'Expected Array for property "images" in Question Model',
     2038: 'Expected Explanation model for property "explanations" in Question Model',
     2039: 'id is missing in Question Model',
-    2040: 'label is missing in Question Model',
+    2040: 'caseId is missing in Question Model',
     2041: 'answer is missing in Question Model',
     2042: 'name is missing in Case Model',
     2043: 'object came in empty fromJson > Question Model',
@@ -58,7 +58,7 @@ app.factory('errorCode', [function () {
     2046: 'label is missing in Explanation Model',
     2047: 'description is missing in Case Model',
     2048: 'owner is missing in Test Model',
-    2049: '',
+    2049: 'Expected Array for property "tags" in Case Model',
     2050: '',
 
     // Error codes between 3000 and 4999 are Front End related Errors...

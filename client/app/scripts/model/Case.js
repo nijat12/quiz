@@ -5,7 +5,7 @@ var Model;
 (function (Model) {
     var Case = (function () {
         //Constructor
-        function Case(id, quizId, name, description, status, images, questions) {
+        function Case(id, quizId, name, description, status, images, questions, tags) {
             //Required
             this.id = id || null;
             //Not Required
@@ -13,8 +13,9 @@ var Model;
             this.name = name;
             this.description = description;
             this.status = status;
-            this.images = images;
-            this.questions = questions;
+            this.images = images || [];
+            this.questions = questions || [];
+            this.tags = tags || [];
         }
         //Getters
         Case.prototype.getId = function () { return this.id; };
@@ -24,6 +25,7 @@ var Model;
         Case.prototype.getStatus = function () { return this.status; };
         Case.prototype.getImages = function () { return this.images; };
         Case.prototype.getQuestions = function () { return this.questions; };
+        Case.prototype.getTags = function () { return this.tags; };
         //Setters
         Case.prototype.setId = function (id) { this.id = id; };
         Case.prototype.setQuizId = function (quizId) { this.quizId = quizId; };
@@ -32,6 +34,7 @@ var Model;
         Case.prototype.setStatus = function (status) { this.status = status; };
         Case.prototype.setImages = function (images) { this.images = images; };
         Case.prototype.setQuestions = function (questions) { this.questions = questions; };
+        Case.prototype.setTags = function (tags) { this.tags = tags; };
         //function to convert to JSON from Object
         Case.prototype.toString = function () {
             var str = '{' +
@@ -68,11 +71,25 @@ var Model;
                     str += ']';
                 }
             }
+            if (this.tags) {
+                if (this.tags.length === 1) {
+                    str += ', "tags"' + ': "' + this.tags[0] + '"';
+                }
+                else {
+                    str += ', "tags":[';
+                    for (var i = 0, len = this.tags.length; i < len; i += 1) {
+                        str += '"' + this.tags[i] + '"';
+                        if (i - 1 != len)
+                            str += ', ';
+                    }
+                    str += ']';
+                }
+            }
             str += '}';
             return str;
         };
         Case.fromJson = function (o) {
-            var id = null, quizId, name, description, status, images, questions;
+            var id = null, quizId, name, description, status, images, questions, tags;
             if (o) {
                 if (o.hasOwnProperty('id') && o.id) {
                     if (typeof o.id !== 'string') {
@@ -81,9 +98,6 @@ var Model;
                     else {
                         id = o.id;
                     }
-                }
-                else {
-                    console.log(o.id);
                 }
                 if (o.hasOwnProperty('quizId') && o.quizId) {
                     if (typeof o.quizId !== 'string') {
@@ -135,11 +149,19 @@ var Model;
                         questions = o.questions;
                     }
                 }
+                if (o.hasOwnProperty('tags') && o.tags) {
+                    if (Object.prototype.toString.call(o.tags) !== '[object Array]') {
+                        throw new Error('2049');
+                    }
+                    else {
+                        tags = o.tags;
+                    }
+                }
             }
             else {
                 throw new Error('2033');
             }
-            return new Model.Case(id, quizId, name, description, status, images, questions);
+            return new Model.Case(id, quizId, name, description, status, images, questions, tags);
         };
         return Case;
     })();

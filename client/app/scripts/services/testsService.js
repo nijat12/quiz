@@ -55,9 +55,41 @@ app.factory('testsService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
 
+    function deleteTest(id){
+      var deferred = $q.defer();
+
+      if(id) {
+        var endPoint = endPointDefinitionService.deleteTestURL;
+        var resource = $resource(endPoint, {id: id},
+          {
+            delete_user: {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              }
+            }
+          });
+        var promise = resource.delete_user().$promise;
+
+        promise.then(function (data) {
+          deferred.resolve(data);
+        }, function (err) {
+          //$log.error('couldn"t reach server to get the Case');
+          deferred.reject('couldn"t reach server to delete the Test');
+        });
+
+      } else {
+        deferred.reject('missing Test id in deleteTest');
+      }
+
+      return deferred.promise;
+    }
+
+
     return {
       getAll:getTests,
-      createTest:createTest
+      createTest:createTest,
+      delete:deleteTest
     }
 
   }]);

@@ -19,7 +19,8 @@ var app = angular
     'ui.router',
     'ngDialog',
     'ngFileUpload',
-    'base64'
+    'base64',
+    'angularSpinner'
   ])
 
   //.run(['$location', function($location){

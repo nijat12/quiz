@@ -10,11 +10,12 @@ module Model {
     private name:string;
     private description:string;
     private status:string;
-    private images:any[];
-    private questions:any[];
+    public images:any[];
+    public questions:any[];
+    public tags:any[];
 
     //Constructor
-    constructor(id:string, quizId?:string, name?:string, description?:string, status?:string, images?:any[], questions?:any[]) {
+    constructor(id:string, quizId?:string, name?:string, description?:string, status?:string, images?:any[], questions?:any[], tags?:any[]) {
       //Required
       this.id = id || null;
       //Not Required
@@ -22,8 +23,9 @@ module Model {
       this.name = name;
       this.description = description;
       this.status = status;
-      this.images = images;
-      this.questions = questions;
+      this.images = images || [];
+      this.questions = questions || [];
+      this.tags = tags || [];
     }
 
     //Getters
@@ -34,6 +36,7 @@ module Model {
     public getStatus ():       string   {return this.status}
     public getImages ():       any[]    {return this.images}
     public getQuestions ():    any[]    {return this.questions}
+    public getTags ():         any[]    {return this.tags}
 
     //Setters
     public setId          (id           : string)  { this.id = id}
@@ -43,6 +46,7 @@ module Model {
     public setStatus      (status       : string)  { this.status = status}
     public setImages      (images       : any[])   { this.images = images}
     public setQuestions   (questions    : any[])   { this.questions = questions}
+    public setTags        (tags         : any[])   { this.tags = tags}
 
     //function to convert to JSON from Object
     public toString ()  : string {
@@ -76,6 +80,19 @@ module Model {
           for (let i:number = 0, len:number = this.questions.length; i < len; i += 1) {
             str += '"' + this.questions[i] + '"';
             if(i - 1 != len) str+= ', ';
+          }
+          str+=']';
+        }
+      }
+      if (this.tags) {
+        if (this.tags.length === 1) {
+          str += ', "tags"' + ': "' + this.tags[0] + '"';
+        }
+        else {
+          str += ', "tags":[';
+          for (let i:number = 0, len:number = this.tags.length; i < len; i += 1) {
+            str += '"' + this.tags[i] + '"';
+            if(i - 1 != len) str+= ', ';
             //str += (i - 1 === len) ? ']' : ', ';
           }
           str+=']';
@@ -94,7 +111,8 @@ module Model {
           description:string,
           status:string,
           images:any[],
-          questions:any[];
+          questions:any[],
+          tags:any[];
 
 
       if(o){
@@ -104,9 +122,6 @@ module Model {
           } else {
             id = o.id;
           }
-        } else {
-          console.log(o.id);
-          //throw new Error('2031');
         }
 
 
@@ -162,6 +177,14 @@ module Model {
           }
         }
 
+        if (o.hasOwnProperty('tags') && o.tags) {
+          if (Object.prototype.toString.call( o.tags ) !== '[object Array]') {
+            throw new Error('2049');
+          } else {
+            tags = o.tags;
+          }
+        }
+
       } else {throw new Error('2033')}
 
       return new Model.Case(
@@ -171,7 +194,8 @@ module Model {
         description,
         status,
         images,
-        questions)
+        questions,
+        tags)
     }
   }
 }

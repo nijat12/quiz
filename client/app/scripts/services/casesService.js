@@ -6,6 +6,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
   function($log, $q, endPointDefinitionService, $resource){
 
     function getCase(id){
+      console.log("Getting a Case");
       var deferred = $q.defer();
 
 
@@ -15,10 +16,8 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
         var promise = resource.get().$promise;
 
         promise.then(function (data) {
-          //console.log(data);
           deferred.resolve(Model.Case.fromJson(data));
         }, function (err) {
-          //$log.error('couldn"t reach server to get the Case');
           deferred.reject('couldn"t reach server to get the Case');
         });
 
@@ -30,6 +29,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
     function getCases(id){
+      console.log("Getting all the Cases");
       var deferred = $q.defer();
 
 
@@ -59,6 +59,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
     function addCase(questionID, data){
+      console.log("Adding a new Case");
       var deferred = $q.defer();
 
       if(data){
@@ -79,7 +80,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
             deferred.reject('object is not a case in addCase');
           }
         } else {
-          deferred.reject('missing question ID in addCase');
+          deferred.reject('missing test ID in addCase');
         }
       } else {
         deferred.reject('missing case object in addCase');
@@ -89,6 +90,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
     function updateCase(data){
+      console.log("Updating a Case");
       var deferred = $q.defer();
 
       console.log(data);
@@ -101,8 +103,6 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
           var promise = resource.save(data.toString()).$promise;
 
           promise.then(function (data) {
-            console.log(data);
-            var c = Model.Case.fromJson(data);
             deferred.resolve();
           }, function (err) {
             deferred.reject('couldn"t reach server to update the Case');
