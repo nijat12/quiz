@@ -37,12 +37,52 @@ var Model;
         Case.prototype.setTags = function (tags) { this.tags = tags; };
         //function to convert to JSON from Object
         Case.prototype.toString = function () {
-            var str = '{' +
-                '"id"' + ': "' + this.id + '", ' +
-                '"quizId"' + ': "' + this.quizId + '", ' +
-                '"name"' + ': "' + this.name + '", ' +
-                '"description"' + ': "' + this.description + '", ' +
-                '"status"' + ': "' + this.status + '"';
+            var str = '{';
+            if (this.id) {
+                str += '"id"' + ': ';
+                if (this.id === null || this.id === undefined) {
+                    str += this.id;
+                }
+                else {
+                    str += '"' + this.id + '"';
+                }
+            }
+            if (this.quizId) {
+                str += ', "quizId"' + ': ';
+                if (this.quizId === null || this.quizId === undefined) {
+                    str += this.quizId;
+                }
+                else {
+                    str += '"' + this.quizId + '"';
+                }
+            }
+            if (this.name) {
+                str += ', "name"' + ': ';
+                if (this.name === null || this.name === undefined) {
+                    str += this.name;
+                }
+                else {
+                    str += '"' + this.name + '"';
+                }
+            }
+            if (this.description) {
+                str += ', "description"' + ': ';
+                if (this.description === null || this.description === undefined) {
+                    str += this.description;
+                }
+                else {
+                    str += '"' + this.description + '"';
+                }
+            }
+            if (this.status) {
+                str += ', "status"' + ': ';
+                if (this.status === null || this.status === undefined) {
+                    str += this.status;
+                }
+                else {
+                    str += '"' + this.status + '"';
+                }
+            }
             if (this.images) {
                 if (this.images.length === 1) {
                     str += ', "images"' + ': "' + this.images[0] + '"';

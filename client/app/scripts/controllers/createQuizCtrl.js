@@ -14,15 +14,23 @@ app
       $scope.caseIndex = 0;
       $scope.currentCase = new Model.Case;
       var backupCase = new Model.Case;
-      //$scope.saveState = true;
       $scope.questionsOnView = [];
       var questionsOriginal = [];
 
-      ////Check if there are any Cases
-      //if($scope.test.cases && $scope.test.cases.length === 0){
-      //  $scope.test.cases[0] = '';
-      //  $scope.saveState = false;
-      //}
+      $scope.caseTitle = function (){
+        if($scope.currentCase){
+          if($scope.currentCase.getName() !== null && $scope.currentCase.getName() !== undefined){
+            return $scope.currentCase.getName();
+          } else {
+            var rt = $scope.caseIndex+1;
+            return rt;
+          }
+        } else {
+          var rt = $scope.caseIndex+1;
+          return rt;
+        }
+
+      };
 
       //Getting a Case
       var getCase = function(id) {
@@ -30,7 +38,6 @@ app
         if(id !== ''){
           loadIcon.show();
           casesService.get(id).then(function (data) {
-            console.log(data);
             loadIcon.hide();
             d.resolve(data);
           }, function (err) {
@@ -44,7 +51,6 @@ app
       //Getting all Cases
       var getAllCases = function(id) {
         casesService.getAll(id).then(function(data){
-          //$scope.currentCase = data;
           console.log(data);
         },function(err){
           console.log(err);
@@ -65,18 +71,14 @@ app
 
         saveCase(new Model.Case).then(function(data){
           if(data instanceof Model.Case){
-            backupCase = $scope.currentCase = data;
+            $scope.currentCase = data;
+            backupCase = angular.copy(data);
             $scope.test.cases.push(data.getId());
             $scope.caseIndex = $scope.test.cases.length - 1;
           }
         },function(err){
           console.log(err);
         });
-
-
-        //$scope.test.cases.push(new Model.Case);
-        //$scope.saveState = false;
-        //$scope.currentCase = new Model.Case;
       };
 
       //Changing the currently viewed Case
@@ -85,7 +87,7 @@ app
             getCase($scope.test.cases[index])
               .then(function(data){
                 $scope.currentCase = data;
-                backupCase = data;
+                backupCase = angular.copy(data);
                 $scope.caseIndex = index;
                 if($scope.currentCase.questions.length > 0){
                   getAllQuestions().then(function (data) {
@@ -110,7 +112,7 @@ app
           if (backupCase !== $scope.currentCase){
             updateCase($scope.currentCase)
               .then(function(data){
-                backupCase = data;
+                backupCase = angular.copy(data);
                 deff.resolve();
               },function(err){
                 deff.reject(err);
@@ -123,34 +125,6 @@ app
 
         return deff.promise;
       };
-
-      ////Save if not Saved
-      //var checkIfSaved = function () {
-      //  var deff = $q.defer();
-      //
-      //  if($scope.saveState === false) {
-      //
-      //    //check to update or save
-      //    if($scope.currentCase.id && $scope.currentCase.id !== null){
-      //      console.log("update");
-      //      $scope.update().then(function () {
-      //        deff.resolve();
-      //      }, function () {
-      //        deff.reject('not');
-      //      });
-      //    } else {
-      //      console.log("save");
-      //      saveCase().then(function () {
-      //        deff.resolve();
-      //      }, function () {
-      //        deff.reject('not');
-      //      });
-      //    }
-      //
-      //  } else deff.reject('saved');
-      //
-      //  return deff.promise;
-      //};
 
       //Adds the case to question
       var saveCase = function (data) {
@@ -167,42 +141,6 @@ app
 
         return def.promise;
       };
-
-      ////Adds the case to question
-      //var save = function () {
-      //  var def = $q.defer();
-      //  casesService.add($scope.test.id, $scope.currentCase)
-      //    .then(function(data){
-      //      $scope.currentCase = data;
-      //      $scope.test.cases[$scope.caseIndex] = data.id;
-      //      $scope.saveState = true;
-      //      def.resolve();
-      //    },function(err){
-      //      console.log(err);
-      //      def.reject();
-      //    });
-      //
-      //  return def.promise;
-      //};
-
-      ////Updates the case in question
-      //$scope.update = function () {
-      //  var def = $q.defer();
-      //
-      //  if($scope.test.cases[$scope.caseIndex] !== ''){
-      //    casesService.update($scope.currentCase)
-      //      .then(function (data) {
-      //        //$scope.test.cases[$scope.caseIndex] = data;
-      //        $scope.saveState = true;
-      //        def.resolve();
-      //      }, function (err) {
-      //        console.log(err);
-      //        def.reject();
-      //      });
-      //  }
-      //
-      //  return def.promise;
-      //};
 
       //Updates the case in question
       var updateCase = function (data) {
@@ -245,7 +183,6 @@ app
       var getAllQuestions = function(){
         var d = $q.defer();
         loadIcon.show();
-        console.log($scope.currentCase.id);
         questionService.getAll($scope.currentCase.getId())
           .then(function (data) {
             loadIcon.hide();
@@ -311,50 +248,6 @@ app
         return deff.promise;
       };
 
-
-      ////Save existing question
-      //var updateQuestions = function () {
-      //  var promises = [];
-      //  if ($scope.questionsOnView.length === questionsOriginal.length) {
-      //
-      //    if ($scope.questionsOnView.length !== 0) {
-      //
-      //      //No new one was created
-      //      for (var i = 0; i < $scope.questionsOnView.length; i++) {
-      //        var deferred = $q.defer();
-      //        if ($scope.questionsOnView[i] !== questionsOriginal[i]) {
-      //          //Update
-      //          questionService.update($scope.questionsOnView[i])
-      //            .then(function (data) {
-      //              console.log(data);
-      //              deferred.resolve(data);
-      //            }, function (err) {
-      //              console.log(err);
-      //              deferred.reject();
-      //            });
-      //
-      //          promises.push(deferred.promise);
-      //        }
-      //      }
-      //    } else {
-      //      var deferred = $q.defer();
-      //      //No Questions at all
-      //      deferred.resolve();
-      //      promises.push(deferred.promise);
-      //    }
-      //  } else {
-      //    var deferred = $q.defer();
-      //    findNewQuestions().then(function(array){
-      //      deferred.resolve(array);
-      //    },function(err){
-      //      deferred.reject(err);
-      //    });
-      //    promises.push(deferred.promise);
-      //  }
-      //
-      //  return $q.all(promises);
-      //};
-
       //Add question to array
       var addQuestionToArray = function () {
         //adding case Id to Question
@@ -377,32 +270,6 @@ app
             console.log(err);
           });
       };
-
-
-      ////Add question to array
-      //var addQuestionToArray = function () {
-      //  updateQuestions().then(function(){
-      //    $scope.questionsOnView.push(new Model.Question);
-      //    $scope.currentCase.questions.push('');
-      //    loadIcon.show();
-      //    saveQuestion($scope.questionsOnView[$scope.currentCase.questions.length - 1])
-      //      .then(function(data){
-      //        console.log('saved Question');
-      //        console.log(data);
-      //        $scope.questionsOnView[$scope.currentCase.questions.length - 1] = data;
-      //        questionsOriginal[$scope.currentCase.questions.length - 1] = data;
-      //        loadIcon.hide();
-      //
-      //        console.log($scope.questionsOnView);
-      //        console.log($scope.currentCase.questions);
-      //      }, function(err){
-      //        console.log(err);
-      //        loadIcon.hide();
-      //      });
-      //  }, function(err){
-      //    console.log(err);
-      //  });
-      //};
 
       //Add a new Question
       var saveQuestion = function (data) {
@@ -427,165 +294,6 @@ app
         return def.promise;
       };
 
-      ////Add a new Question
-      //var saveQuestion = function (data) {
-      //  var def = $q.defer();
-      //  console.log(data);
-      //  console.log($scope.currentCase.getId());
-      //  if (data && data !== '') {
-      //    if ($scope.currentCase.getId() !== null) {
-      //      questionService.add($scope.currentCase.getId(), data)
-      //        .then(function (obj) {
-      //          def.resolve(obj);
-      //        }, function (err) {
-      //          def.reject(err);
-      //        });
-      //    } else checkIfSaved().then(function () {
-      //        def.resolve();
-      //      }, function (err) {
-      //        if (err === 'saved') def.resolve();
-      //        else def.reject();
-      //      });
-      //  } else {
-      //    def.reject();
-      //  }
-      //
-      //  return def.promise;
-      //};
-      //
-      //var findNewQuestions = function () {
-      //  var def = $q.defer();
-      //  var promises = [];
-      //
-      //  var numberOfNewQuestion = $scope.questionsOnView.length - questionsOriginal.length;
-      //  for (var i = $scope.questionsOnView.length - 1; i >= $scope.questionsOnView.length - numberOfNewQuestion; i--) {
-      //
-      //    saveQuestion($scope.questionsOnView[i])
-      //      .then(function (data) {
-      //        def.resolve(data);
-      //      }, function (err) {
-      //        def.reject(err);
-      //      });
-      //
-      //    promises.push(def.promise);
-      //  }
-      //
-      //  return $q.all(promises);
-      //};
-
-      ////Add a Question Button
-      //$scope.addQuestion = function (){
-      //  console.log($scope.currentCase.questions);
-      //  if($scope.currentCase.questions){
-      //    if($scope.currentCase.questions.length === 0) {
-      //      addQuestionToArray();
-      //    } else {
-      //      //save the question
-      //      checkIfQuestionSaved().then(function(data){
-      //        addQuestionToArray();
-      //      },function(err){
-      //        if(err === 'saved') addQuestionToArray();
-      //      });
-      //
-      //      $scope.currentCase.questions.push('');
-      //    }
-      //    console.log($scope.currentCase);
-      //  } else {
-      //    //$scope.currentCase.setQuestions()
-      //  }
-      //};
-      //
-      ////Add question to array
-      //var addQuestionToArray = function () {
-      //  $scope.questionsOnView.push(new Model.Question);
-      //  $scope.currentCase.questions.push('');
-      //  $scope.saveState = false;
-      //};
-      //
-      //var checkIfQuestionSaved = function () {
-      //  var defer = $q.defer();
-      //  var promises = [];
-      //
-      //  if($scope.saveState === false) {
-      //    if($scope.questionsOnView.length === questionsOriginal.length){
-      //      //No new one was created
-      //      for(var i = 0; i < $scope.questionsOnView.length; i++){
-      //        if($scope.questionsOnView[i] !== questionsOriginal[i]){
-      //          //Update
-      //
-      //          var d = $q.defer();
-      //
-      //          updateQuestion($scope.questionsOnView[i])
-      //            .then(function(data){
-      //              d.resolve(data);
-      //            },function(err){
-      //              d.reject(err);
-      //            });
-      //
-      //          promises.push(d.promise);
-      //        }
-      //      }
-      //    } else {
-      //      //add the new ones then save
-      //      var numberOfNewQuestion = $scope.questionsOnView.length - questionsOriginal.length;
-      //      for(var i = $scope.questionsOnView.length-1; i >= $scope.questionsOnView.length-numberOfNewQuestion; i--){
-      //
-      //        //Save
-      //        var d = $q.defer();
-      //
-      //        saveQuestion($scope.questionsOnView[i])
-      //          .then(function(data){
-      //            d.resolve(data);
-      //          },function(err){
-      //            d.reject(err);
-      //          });
-      //
-      //        promises.push(d.promise);
-      //      }
-      //    }
-      //  } else {
-      //    defer.reject('saved');
-      //    return defer.promise;
-      //  }
-      //
-      //  return $q.all(promises);
-      //};
-      //
-      //var updateQuestion = function (data) {
-      //  var def = $q.defer();
-      //
-      //  if(data && data !== ''){
-      //    questionService.update(data)
-      //      .then(function (data) {
-      //        //$scope.test.cases[$scope.caseIndex] = data;
-      //        $scope.saveState = true;
-      //        def.resolve(data);
-      //      }, function (err) {
-      //        console.log(err);
-      //        def.reject();
-      //      });
-      //  }
-      //
-      //  return def.promise;
-      //};
-      //
-      //var saveQuestion = function (data) {
-      //  var def = $q.defer();
-      //
-      //  if(data && data !== ''){
-      //    questionService.add($scope.currentCase.id, data)
-      //      .then(function (data) {
-      //        $scope.saveState = true;
-      //        def.resolve(data);
-      //      }, function (err) {
-      //        console.log(err);
-      //        def.reject();
-      //      });
-      //  }
-      //
-      //  return def.promise;
-      //};
-
 
       //run it the first time to make sure everything is in order
       var firstRun = function () {
@@ -596,7 +304,8 @@ app
           if ($scope.test.cases.length !== 0 && $scope.test.cases[0] !== null && $scope.test.cases[0] !== '') {
             getCase($scope.test.cases[0])
               .then(function(data){
-                backupCase = $scope.currentCase = data;
+                $scope.currentCase = data;
+                backupCase = angular.copy(data);
                 getAllQuestions().then(function (data) {
                   $scope.questionsOnView = data;
                   questionsOriginal = data;

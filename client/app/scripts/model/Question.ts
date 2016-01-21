@@ -42,12 +42,41 @@ module Model{
     //function to convert to JSON from Object
     public toString ()  : string {
 
-      let str: string = '{' + '"id"'    + ': "' + this.id     + '", ' +
-                              '"caseId"'+ ': "' + this.caseId + '", ' +
-                              '"label"' + ': "' + this.label  + '", ' +
-                              '"answer"'+ ': '  + this.answer;
+      let str: string = '{';
 
 
+      if(this.id){
+        str+='"id"'+ ': ';
+        if(this.id === null || this.id === undefined){
+          str+=this.id;
+        } else {
+          str+= '"'+ this.id + '"';
+        }
+      }
+      if(this.caseId){
+        str+=', "caseId"'+ ': ';
+        if(this.caseId === null || this.caseId === undefined){
+          str+=this.caseId;
+        } else {
+          str+= '"'+ this.caseId + '"';
+        }
+      }
+      if(this.label){
+        str+=', "label"'+ ': ';
+        if(this.label === null || this.label === undefined){
+          str+=this.label;
+        } else {
+          str+= '"'+ this.label + '"';
+        }
+      }
+      if(this.answer){
+        str+=', "answer"'+ ': ';
+        if(this.answer === null || this.answer === undefined){
+          str+=this.answer;
+        } else {
+          str+= '"'+ this.answer + '"';
+        }
+      }
       if (this.images) {
         if (this.images.length === 1) {
           str += ', "images"' + ': "' + this.images[0] + '"';

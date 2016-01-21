@@ -51,25 +51,81 @@ module Model {
     //function to convert to JSON from Object
     public toString ()  : string {
 
-      let str: string = '{' +
-        '"id"'         + ': "' + this.id          + '", ' +
-        '"name"'       + ': "' + this.name        + '", ' +
-        '"created"'    + ': "' + this.created     + '", ' +
-        '"status"'     + ': "' + this.status      + '", ' +
-        '"description"'+ ': "' + this.description + '", ' +
-        '"owner"'      + ': "' + this.owner       + '", ' +
-        '"updated"'    + ': "' + this.updated     + '", ';
+      let str: string = '{';
 
-      if(this.cases.length === 1){
-        str += '"cases"'      + ': "' + this.cases[0] + '"}';
-      }
-      else {
-        str += '"cases":[';
-        for (let i: number = 0, len: number = this.cases.length; i < len; i+=1){
-          str += '"'+ this.cases[i] +'"';
-          str += (i - 1 === len) ? ']}' : ', ';
+
+      if(this.name){
+        str+='"name"'+ ': ';
+        if(this.name === null || this.name === undefined){
+          str+=this.name;
+        } else {
+          str+= '"'+ this.name + '"';
         }
       }
+      if(this.id){
+        str+=', "id"'+ ': ';
+        if(this.id === null || this.id === undefined){
+          str+=this.id;
+        } else {
+          str+= '"'+ this.id + '"';
+        }
+      }
+      if(this.status){
+        str+=', "status"'+ ': ';
+        if(this.status === null || this.status === undefined){
+          str+=this.status;
+        } else {
+          str+= '"'+ this.status + '"';
+        }
+      }
+      if(this.created){
+        str+=', "created"'+ ': ';
+        if(this.created === null || this.created === undefined){
+          str+=this.created;
+        } else {
+          str+= '"'+ this.created + '"';
+        }
+      }
+      if(this.description){
+        str+=', "description"'+ ': ';
+        if(this.description === null || this.description === undefined){
+          str+=this.description;
+        } else {
+          str+= '"'+ this.description + '"';
+        }
+      }
+      if(this.owner){
+        str+=', "owner"'+ ': ';
+        if(this.owner === null || this.owner === undefined){
+          str+=this.owner;
+        } else {
+          str+= '"'+ this.owner + '"';
+        }
+      }
+      if(this.updated){
+        str+=', "updated"'+ ': ';
+        if(this.updated === null || this.updated === undefined){
+          str+=this.updated;
+        } else {
+          str+= '"'+ this.updated + '"';
+        }
+      }
+      if (this.cases) {
+        if (this.cases.length === 1) {
+          str += ', "cases"' + ': "' + this.cases[0] + '"';
+        }
+        else {
+          str += ', "cases":[';
+          for (let i:number = 0, len:number = this.cases.length; i < len; i += 1) {
+            str += '"' + this.cases[i] + '"';
+            if(i - 1 != len) str+= ', ';
+            //str += (i - 1 === len) ? ']' : ', ';
+          }
+          str+=']';
+        }
+      }
+
+      str+='}';
 
       return str
     }
