@@ -32,15 +32,12 @@
 
   <div class="col-lg-4">
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" style="margin-top: 20px;">
       <fieldset>
-
-        <!-- Form Name -->
-        <legend>Form Name</legend>
 
         <!-- Text input-->
         <div class="form-group">
-          <label class="col-md-12" for="name">Name</label>
+          <label class="col-md-12" for="name">Case Name</label>
           <div class="col-md-12">
             <input id="name" name="name" type="text" ng-model="currentCase.name" placeholder="" class="form-control input-md">
 
@@ -49,7 +46,7 @@
 
         <!-- Textarea -->
         <div class="form-group">
-          <label class="col-md-12" for="description">Description</label>
+          <label class="col-md-12" for="description">Case Description</label>
           <div class="col-md-12">
             <textarea class="form-control" id="description" ng-model="currentCase.description" name="description"></textarea>
           </div>
@@ -119,7 +116,7 @@
   <!-------------------Vertical Line-->
 
   <div class="col-lg-7">
-    <h1 style="text-align: center;">Case: {{caseTitle()}}</h1><hr>
+    <h1 style="text-align: center;">{{caseTitle()}}</h1><hr>
 
     <div ng-repeat="questions in currentCase.questions">
       <span ng-include="'views/question.html'">

@@ -19,14 +19,16 @@ app
 
       $scope.caseTitle = function (){
         if($scope.currentCase){
-          if($scope.currentCase.getName() !== null && $scope.currentCase.getName() !== undefined){
+          if($scope.currentCase.getName() !== null && $scope.currentCase.getName() !== undefined && $scope.currentCase.getName() !== ''){
             return $scope.currentCase.getName();
           } else {
-            var rt = $scope.caseIndex+1;
+            var calc = $scope.caseIndex+1;
+            var rt = 'Case# ' + calc;
             return rt;
           }
         } else {
-          var rt = $scope.caseIndex+1;
+          var calc = $scope.caseIndex+1;
+          var rt = 'Case# ' + calc;
           return rt;
         }
 
