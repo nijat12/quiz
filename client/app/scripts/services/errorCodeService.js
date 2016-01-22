@@ -59,7 +59,15 @@ app.factory('errorCode', [function () {
     2047: 'description is missing in Case Model',
     2048: 'owner is missing in Test Model',
     2049: 'Expected Array for property "tags" in Case Model',
-    2050: '',
+    2050: 'Expected String for property "id" in Tag Model',
+    2051: 'name is missing in Tag Model',
+    2052: 'object came in empty fromJson > Tag Model',
+    2053: '',
+    2054: '',
+    2055: '',
+    2056: '',
+    2057: '',
+    2058: '',
 
     // Error codes between 3000 and 4999 are Front End related Errors...
     3000: '',

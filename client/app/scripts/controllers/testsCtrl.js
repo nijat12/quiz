@@ -11,19 +11,25 @@
  * Controller of the quizApp
  */
 app
-  .controller('testCtrl',['$scope', 'testsService', 'sessionService', '$state',
-      function ($scope, testsService, sessionService, $state) {
+  .controller('testCtrl',['$scope', 'testsService', 'sessionService', '$state', '$rootScope', '$q', 'loadIcon', 'tagsService',
+      function ($scope, testsService, sessionService, $state, $rootScope, $q, loadIcon, tagsService) {
         $scope.tests = null;
         $scope.newTest = null;
         $scope.newName = null;
         $scope.newDescription = null;
 
         var getTests = function () {
+          loadIcon.show();
           testsService.getAll().then(function(data){
             $scope.tests = null;
             $scope.tests = data;
+            getTags().then(function(){
+              loadIcon.hide();
+            },function(){
+              loadIcon.hide();
+            });
           },function(err){
-
+            loadIcon.hide();
           });
         };
 
@@ -105,6 +111,22 @@ app
             },function(err){
               console.log(err);
             });
+        };
+
+        var getTags = function () {
+          var deff = $q.defer();
+
+          tagsService.get().then(function(data){
+            if(data && data.length > 0) {
+              $rootScope.tags = data;
+            }
+            deff.resolve();
+          },function(err){
+            console.log(err);
+            deff.reject();
+          });
+
+          return deff.promise;
         };
 
 

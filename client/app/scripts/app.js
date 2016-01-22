@@ -61,6 +61,11 @@ var app = angular
         templateUrl: 'views/tests.html',
         controller: 'testCtrl'
       })
+      .state('header.tags', {
+        url:'/view/tags',
+        templateUrl: 'views/tags.html',
+        controller: 'tagsCtrl'
+      })
       .state('header.viewQuizUser', {
         url:'/view/user',
         templateUrl: 'views/viewQuizUser.html'

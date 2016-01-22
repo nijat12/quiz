@@ -11,6 +11,7 @@ app.service('endPointDefinitionService' ,[function () {
 
   //Get all tests or create one
   this.testURL = this.apiURL + '/api/quiz';
+  this.tagsURL = this.apiURL + '/api/tags';
 
   //get endpoints
   this.getTestURL = this.testURL + '/:id';
