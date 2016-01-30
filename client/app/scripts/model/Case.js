@@ -91,10 +91,9 @@ var Model;
                     str += ', "images":[';
                     for (var i = 0, len = this.images.length; i < len; i += 1) {
                         str += '"' + this.images[i] + '"';
-                        if (i - 1 != len)
-                            str += ', ';
+                        //if(i - 1 != len) str+= ', ';
+                        str += (i - 1 === len) ? ']' : ', ';
                     }
-                    str += ']';
                 }
             }
             if (this.questions) {
@@ -105,10 +104,9 @@ var Model;
                     str += ', "questions":[';
                     for (var i = 0, len = this.questions.length; i < len; i += 1) {
                         str += '"' + this.questions[i] + '"';
-                        if (i - 1 != len)
-                            str += ', ';
+                        //if(i - 1 != len) str+= ', ';
+                        str += (i - 1 === len) ? ']' : ', ';
                     }
-                    str += ']';
                 }
             }
             if (this.tags) {
@@ -119,10 +117,9 @@ var Model;
                     str += ', "tags":[';
                     for (var i = 0, len = this.tags.length; i < len; i += 1) {
                         str += '"' + this.tags[i] + '"';
-                        if (i - 1 != len)
-                            str += ', ';
+                        //if(i - 1 != len) str+= ', ';
+                        str += (i - 1 === len) ? ']' : ', ';
                     }
-                    str += ']';
                 }
             }
             str += '}';

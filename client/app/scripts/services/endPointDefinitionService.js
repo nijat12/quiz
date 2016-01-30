@@ -5,7 +5,8 @@
 
 app.service('endPointDefinitionService' ,[function () {
 
-  this.apiURL = 'http://10.9.25.192:8080';
+  //this.apiURL = 'http://10.9.25.192:8080';
+  this.apiURL = 'http://localhost:8080';
   this.s3URL    = '';
 
 

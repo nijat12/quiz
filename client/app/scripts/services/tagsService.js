@@ -7,6 +7,7 @@ app.factory('tagsService', ['$log', '$q', 'endPointDefinitionService', '$resourc
   function($log, $q, endPointDefinitionService, $resource){
 
     function getAllTags(){
+      console.log('Getting Tags');
       var deferred = $q.defer();
 
       var endPoint = endPointDefinitionService.tagsURL;
@@ -29,6 +30,7 @@ app.factory('tagsService', ['$log', '$q', 'endPointDefinitionService', '$resourc
     }
 
     function createTags(tag){
+      console.log('Creating a Tag');
       var deferred = $q.defer();
 
       if(tag){

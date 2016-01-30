@@ -8,8 +8,8 @@
  * Controller of the quizApp
  */
 app
-  .controller('createQuizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q', 'questionService', 'loadIcon',
-    function ($scope, $base64, s3Service, sessionService, $state, casesService, $q, questionService, loadIcon) {
+  .controller('createQuizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q', 'questionService', 'loadIcon', '$rootScope',
+    function ($scope, $base64, s3Service, sessionService, $state, casesService, $q, questionService, loadIcon, $rootScope) {
       $scope.test = sessionService.test;
       $scope.caseIndex = 0;
       $scope.currentCase = new Model.Case;
@@ -17,6 +17,68 @@ app
       $scope.questionsOnView = [];
       var questionsOriginal = [];
 
+
+      $scope.localTags = [];
+      $scope.tagsModel = [];
+      $scope.tagsSettings = {displayProp: 'name', idProp: 'id', closeOnBlur: true};
+
+      /////Tags/////
+
+      var getTagsFormatted = function(){
+        $scope.localTags = [];
+
+        for (var i = 0; i < $rootScope.tags.length; i++){
+          $scope.localTags.push({id: i, name: $rootScope.tags[i].getName()});
+        }
+        assignTags();
+
+        console.log($scope.localTags);
+        console.log($scope.tagsModel);
+        console.log($scope.currentCase.tags);
+      };
+
+      var assignTags = function () {
+        $scope.tagsModel = [];
+        for(var i = 0; i < $scope.currentCase.tags.length; i++){
+          for(var x = 0; x < $scope.localTags.length; x++){
+            if($scope.currentCase.tags[i] === $scope.localTags[x].name){
+              $scope.tagsModel.push({id: x});
+            }
+          }
+        }
+      };
+
+      var tagsReformatted = function(val){
+        if(val && val.length>0){
+          $scope.currentCase.tags = [];
+          for (var i = 0; i < val.length; i++) {
+            for (var x = 0; x < $scope.localTags.length; x++){
+              if(val[i].id === $scope.localTags[x].id){
+                $scope.currentCase.tags.push($scope.localTags[x].name);
+              }
+            }
+          }
+        }
+        console.log($scope.currentCase.tags);
+      };
+
+      $scope.$watchCollection(
+        "tagsModel",
+        function( newValue, oldValue) {
+          tagsReformatted(newValue);
+        }
+      );
+
+      //$scope.$watch(
+      //  "currentCase.id",
+      //  function( newValue, oldValue) {
+      //    console.log('changed');
+      //    getTagsFormatted();
+      //  }
+      //);
+
+
+      ///////Cases///////
       $scope.caseTitle = function (){
         if($scope.currentCase){
           if($scope.currentCase.getName() !== null && $scope.currentCase.getName() !== undefined && $scope.currentCase.getName() !== ''){
@@ -74,6 +136,7 @@ app
         saveCase(new Model.Case).then(function(data){
           if(data instanceof Model.Case){
             $scope.currentCase = data;
+            assignTags();
             backupCase = angular.copy(data);
             $scope.test.cases.push(data.getId());
             $scope.caseIndex = $scope.test.cases.length - 1;
@@ -89,6 +152,7 @@ app
             getCase($scope.test.cases[index])
               .then(function(data){
                 $scope.currentCase = data;
+                assignTags();
                 backupCase = angular.copy(data);
                 $scope.caseIndex = index;
                 if($scope.currentCase.questions.length > 0){
@@ -311,6 +375,9 @@ app
                 getAllQuestions().then(function (data) {
                   $scope.questionsOnView = data;
                   questionsOriginal = data;
+
+                  getTagsFormatted();
+
                 }, function (err) {
                   console.log(err);
                 });

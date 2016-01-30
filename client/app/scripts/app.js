@@ -20,7 +20,8 @@ var app = angular
     'ngDialog',
     'ngFileUpload',
     'base64',
-    'angularSpinner'
+    'angularSpinner',
+    'angularjs-dropdown-multiselect'
   ])
 
   //.run(['$location', function($location){

@@ -100,7 +100,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
 
           var endPoint = endPointDefinitionService.updateCaseURL;
           var resource = $resource(endPoint);
-          var promise = resource.save(data.toString()).$promise;
+          var promise = resource.save(data).$promise;
 
           promise.then(function (data) {
             deferred.resolve();

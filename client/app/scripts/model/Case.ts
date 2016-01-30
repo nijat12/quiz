@@ -103,9 +103,10 @@ module Model {
           str += ', "images":[';
           for (let i:number = 0, len:number = this.images.length; i < len; i += 1) {
             str += '"' + this.images[i] + '"';
-            if(i - 1 != len) str+= ', ';
+            //if(i - 1 != len) str+= ', ';
+            str += (i - 1 === len) ? ']' : ', ';
           }
-          str+=']';
+          //str+=']';
         }
       }
       if (this.questions) {
@@ -116,9 +117,10 @@ module Model {
           str += ', "questions":[';
           for (let i:number = 0, len:number = this.questions.length; i < len; i += 1) {
             str += '"' + this.questions[i] + '"';
-            if(i - 1 != len) str+= ', ';
+            //if(i - 1 != len) str+= ', ';
+            str += (i - 1 === len) ? ']' : ', ';
           }
-          str+=']';
+          //str+=']';
         }
       }
       if (this.tags) {
@@ -129,10 +131,10 @@ module Model {
           str += ', "tags":[';
           for (let i:number = 0, len:number = this.tags.length; i < len; i += 1) {
             str += '"' + this.tags[i] + '"';
-            if(i - 1 != len) str+= ', ';
-            //str += (i - 1 === len) ? ']' : ', ';
+            //if(i - 1 != len) str+= ', ';
+            str += (i - 1 === len) ? ']' : ', ';
           }
-          str+=']';
+          //str+=']';
         }
       }
 
