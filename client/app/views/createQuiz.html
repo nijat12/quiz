@@ -123,7 +123,7 @@
   <div class="col-lg-7">
     <h1 style="text-align: center;">{{caseTitle()}}</h1><hr>
 
-    <div ng-repeat="questions in currentCase.questions">
+    <div ng-repeat="model in questionsOnView track by $index">
       <span ng-include="'views/question.html'">
 
       </span>

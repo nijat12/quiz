@@ -6,7 +6,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
   function($log, $q, endPointDefinitionService, $resource){
 
     function getCase(id){
-      console.log("Getting a Case");
+      //console.log("Getting a Case");
       var deferred = $q.defer();
 
 
@@ -29,7 +29,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
     function getCases(id){
-      console.log("Getting all the Cases");
+      //console.log("Getting all the Cases");
       var deferred = $q.defer();
 
 
@@ -59,7 +59,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
     function addCase(questionID, data){
-      console.log("Adding a new Case");
+      //console.log("Adding a new Case");
       var deferred = $q.defer();
 
       if(data){
@@ -90,7 +90,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
     }
 
     function updateCase(data){
-      console.log("Updating a Case");
+      //console.log("Updating a Case");
       var deferred = $q.defer();
 
       console.log(data);

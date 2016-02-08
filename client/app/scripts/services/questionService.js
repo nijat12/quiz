@@ -7,7 +7,7 @@ app.factory('questionService', ['$log', 'endPointDefinitionService', '$resource'
   function($log, endPointDefinitionService, $resource, $q){
 
   function getQuestions(id){
-    console.log("Getting all the Questions");
+    //console.log("Getting all the Questions");
     var deferred = $q.defer();
 
     if(id){
@@ -29,7 +29,7 @@ app.factory('questionService', ['$log', 'endPointDefinitionService', '$resource'
   }
 
   function getQuestion(id){
-    console.log("Getting a Question");
+    //console.log("Getting a Question");
     var deferred = $q.defer();
 
     if(id){
@@ -52,7 +52,7 @@ app.factory('questionService', ['$log', 'endPointDefinitionService', '$resource'
   }
 
     function addQuestion(questionID, data){
-      console.log("Adding a new Question");
+      //console.log("Adding a new Question");
       var deferred = $q.defer();
 
       if(data){
@@ -87,7 +87,7 @@ app.factory('questionService', ['$log', 'endPointDefinitionService', '$resource'
     }
 
     function updateQuestion(data){
-      console.log("Updating a Question");
+      //console.log("Updating a Question");
       var deferred = $q.defer();
 
       if(data){

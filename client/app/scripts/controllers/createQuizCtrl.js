@@ -31,10 +31,6 @@ app
           $scope.localTags.push({id: i, name: $rootScope.tags[i].getName()});
         }
         assignTags();
-
-        console.log($scope.localTags);
-        console.log($scope.tagsModel);
-        console.log($scope.currentCase.tags);
       };
 
       var assignTags = function () {
@@ -59,7 +55,6 @@ app
             }
           }
         }
-        console.log($scope.currentCase.tags);
       };
 
       $scope.$watchCollection(
@@ -155,14 +150,12 @@ app
                 assignTags();
                 backupCase = angular.copy(data);
                 $scope.caseIndex = index;
-                if($scope.currentCase.questions.length > 0){
-                  getAllQuestions().then(function (data) {
-                    $scope.questionsOnView = data;
-                    questionsOriginal = data;
-                  }, function (err) {
-                    console.log(err);
-                  });
-                }
+                getAllQuestions().then(function (data) {
+                  $scope.questionsOnView = data;
+                  questionsOriginal = angular.copy(data);
+                }, function (err) {
+                  console.log(err);
+                });
               },function(err){
                 console.log(err);
               });
@@ -325,7 +318,7 @@ app
         saveQuestion(array)
           .then(function(data){
             $scope.questionsOnView.push(data);
-            questionsOriginal.push(data);
+            questionsOriginal.push(angular.copy(data));
             $scope.currentCase.questions.push(data.getId());
             checkIfSaved().then(function(){
               //Do nothing
@@ -374,7 +367,7 @@ app
                 backupCase = angular.copy(data);
                 getAllQuestions().then(function (data) {
                   $scope.questionsOnView = data;
-                  questionsOriginal = data;
+                  questionsOriginal = angular.copy(data);
 
                   getTagsFormatted();
 
@@ -388,7 +381,7 @@ app
             addCaseToArray();
           }
         }
-      }();
+      };
 
       //Scroll to bottom
       var scrollBottom = function () {
@@ -401,7 +394,7 @@ app
         //alert('Hey!');
       });
 
-
+      firstRun();
 
 
 
