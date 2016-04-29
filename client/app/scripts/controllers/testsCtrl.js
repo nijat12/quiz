@@ -17,17 +17,18 @@ app
         $scope.newTest = null;
         $scope.newName = null;
         $scope.newDescription = null;
+        $scope.newTags = {};
 
         var getTests = function () {
           loadIcon.show();
           testsService.getAll().then(function(data){
             $scope.tests = null;
             $scope.tests = data;
-            getTags().then(function(){
+            //getTags().then(function(){
               loadIcon.hide();
-            },function(){
-              loadIcon.hide();
-            });
+            //},function(){
+            //  loadIcon.hide();
+            //});
           },function(err){
             loadIcon.hide();
           });
@@ -37,10 +38,19 @@ app
 
         $scope.createJson = function () {
 
+          //console.log($scope.newTags);
+
           if ($scope.newTest.$valid) {
             $scope.newTest = Model.Test.fromJson({name:$scope.newName,status:'Active'});
             if($scope.newDescription){
               $scope.newTest.setDescription($scope.newDescription);
+            }
+            if($scope.newTags){
+              
+
+              //Open another modal to pick Cases with these Tags
+
+
             }
 
             testsService.createTest($scope.newTest).then(function (data) {
@@ -113,21 +123,21 @@ app
             });
         };
 
-        var getTags = function () {
-          var deff = $q.defer();
-
-          tagsService.get().then(function(data){
-            if(data && data.length > 0) {
-              $rootScope.tags = data;
-            }
-            deff.resolve();
-          },function(err){
-            console.log(err);
-            deff.reject();
-          });
-
-          return deff.promise;
-        };
+        //var getTags = function () {
+        //  var deff = $q.defer();
+        //
+        //  tagsService.get().then(function(data){
+        //    if(data && data.length > 0) {
+        //      $rootScope.tags = data;
+        //    }
+        //    deff.resolve();
+        //  },function(err){
+        //    console.log(err);
+        //    deff.reject();
+        //  });
+        //
+        //  return deff.promise;
+        //};
 
 
 

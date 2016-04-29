@@ -22,7 +22,8 @@ var app = angular
     'angularSpinner',
     'angularjs-dropdown-multiselect',
     'naif.base64',
-    'angularHideHeader'
+    'angularHideHeader',
+    'ngTagsInput'
   ])
 
   //.run(['$location', function($location){

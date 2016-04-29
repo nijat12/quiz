@@ -67,6 +67,7 @@
     </li>
     <li ng-repeat="case in test.cases">
       <button class="nav-button" ng-click="changeCase($index)">{{$index + 1}}
+        <!--<img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 84px;">-->
         <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 84px;">
       </button>
     </li>
@@ -105,10 +106,12 @@
           </div>
         </div>
 
-        <div ng-dropdown-multiselect=""
-             options="localTags"
-             selected-model="tagsModel"
-             extra-settings="tagsSettings"></div>
+        <span ng-controller="tagsCtrl">
+          <div ng-dropdown-multiselect=""
+               options="localTags"
+               selected-model="tagsModel"
+               extra-settings="tagsSettings"></div>
+        </span>
 
       </fieldset>
     </form>

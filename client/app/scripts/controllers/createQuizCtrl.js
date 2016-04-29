@@ -25,9 +25,6 @@ app
       var questionsOriginal = [];
 
 
-      $scope.localTags = [];
-      $scope.tagsModel = [];
-      $scope.tagsSettings = {displayProp: 'name', idProp: 'id', closeOnBlur: true};
 
 
 
@@ -39,46 +36,49 @@ app
       //
       //
 
-
-      var getTagsFormatted = function(){
-        $scope.localTags = [];
-
-        for (var i = 0; i < $rootScope.tags.length; i++){
-          $scope.localTags.push({id: i, name: $rootScope.tags[i].getName()});
-        }
-        assignTags();
-      };
-
-      var assignTags = function () {
-        $scope.tagsModel = [];
-        for(var i = 0; i < $scope.currentCase.tags.length; i++){
-          for(var x = 0; x < $scope.localTags.length; x++){
-            if($scope.currentCase.tags[i] === $scope.localTags[x].name){
-              $scope.tagsModel.push({id: x});
-            }
-          }
-        }
-      };
-
-      var tagsReformatted = function(val){
-        if(val && val.length>0){
-          $scope.currentCase.tags = [];
-          for (var i = 0; i < val.length; i++) {
-            for (var x = 0; x < $scope.localTags.length; x++){
-              if(val[i].id === $scope.localTags[x].id){
-                $scope.currentCase.tags.push($scope.localTags[x].name);
-              }
-            }
-          }
-        }
-      };
-
-      $scope.$watchCollection(
-        "tagsModel",
-        function( newValue, oldValue) {
-          tagsReformatted(newValue);
-        }
-      );
+      //$scope.localTags = [];
+      //$scope.tagsModel = [];
+      //$scope.tagsSettings = {displayProp: 'name', idProp: 'id', closeOnBlur: true};
+      //
+      //var getTagsFormatted = function(){
+      //  $scope.localTags = [];
+      //
+      //  for (var i = 0; i < $rootScope.tags.length; i++){
+      //    $scope.localTags.push({id: i, name: $rootScope.tags[i].getName()});
+      //  }
+      //  assignTags();
+      //};
+      //
+      //var assignTags = function () {
+      //  $scope.tagsModel = [];
+      //  for(var i = 0; i < $scope.currentCase.tags.length; i++){
+      //    for(var x = 0; x < $scope.localTags.length; x++){
+      //      if($scope.currentCase.tags[i] === $scope.localTags[x].name){
+      //        $scope.tagsModel.push({id: x});
+      //      }
+      //    }
+      //  }
+      //};
+      //
+      //var tagsReformatted = function(val){
+      //  if(val && val.length>0){
+      //    $scope.currentCase.tags = [];
+      //    for (var i = 0; i < val.length; i++) {
+      //      for (var x = 0; x < $scope.localTags.length; x++){
+      //        if(val[i].id === $scope.localTags[x].id){
+      //          $scope.currentCase.tags.push($scope.localTags[x].name);
+      //        }
+      //      }
+      //    }
+      //  }
+      //};
+      //
+      //$scope.$watchCollection(
+      //  "tagsModel",
+      //  function( newValue, oldValue) {
+      //    tagsReformatted(newValue);
+      //  }
+      //);
 
       //$scope.$watch(
       //  "currentCase.id",
@@ -157,7 +157,7 @@ app
         saveCase(new Model.Case).then(function(data){
           if(data instanceof Model.Case){
             $scope.currentCase = data;
-            assignTags();
+            $rootScope.$broadcast('ReasignTags');
             backupCase = angular.copy(data);
             $scope.test.cases.push(data.getId());
             $scope.caseIndex = $scope.test.cases.length - 1;
@@ -179,7 +179,7 @@ app
             getCase($scope.test.cases[index])
               .then(function(data){
                 $scope.currentCase = data;
-                assignTags();
+                $rootScope.$broadcast('ReasignTags');
                 backupCase = angular.copy(data);
                 $scope.caseIndex = index;
                 getAllQuestions().then(function (data) {
@@ -480,6 +480,11 @@ app
         });
       };
 
+      // Getting Images for sidebar
+      $scope.getIMages = function(index){
+
+      };
+
       //Scroll to bottom
       var scrollBottom = function () {
         $("html, body").animate({ scrollTop: $(document).height() }, 1000);
@@ -523,6 +528,7 @@ app
                   //console.log($scope.currentCase);
                   $scope.questionsOnView = data;
                   questionsOriginal = angular.copy(data);
+                  $rootScope.$broadcast('case-loaded');
 
                 }, function (err) {
                   console.log(err);
@@ -535,11 +541,12 @@ app
           }
 
 
-          getTagsFormatted();
+          //getTagsFormatted();
         }
       };
 
       firstRun();
     }
+
   ]
 );

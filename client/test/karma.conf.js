@@ -43,7 +43,8 @@ module.exports = function(config) {
       'bower_components/angular-spinner/angular-spinner.js',
       'bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js',
       'bower_components/angular-base64-upload/src/angular-base64-upload.js',
-      'bower_components/angular-hideheader/dist/angular-hide-header.min.js',
+      'bower_components/angular-hide-header/dist/angular-hide-header.min.js',
+      'bower_components/ng-tags-input/ng-tags-input.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
