@@ -38,11 +38,12 @@ module.exports = function(config) {
       'bower_components/ngDialog/js/ngDialog.js',
       'bower_components/bootstrap-select/bootstrap-select.js',
       'bower_components/angular-bootstrap-select/build/angular-bootstrap-select.js',
-      'bower_components/ng-file-upload/ng-file-upload.js',
       'bower_components/angular-base64/angular-base64.js',
       'bower_components/spin.js/spin.js',
       'bower_components/angular-spinner/angular-spinner.js',
       'bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js',
+      'bower_components/angular-base64-upload/src/angular-base64-upload.js',
+      'bower_components/angular-hideheader/dist/angular-hide-header.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

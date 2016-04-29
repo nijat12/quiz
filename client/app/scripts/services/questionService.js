@@ -16,6 +16,8 @@ app.factory('questionService', ['$log', 'endPointDefinitionService', '$resource'
       var promise = resource.query().$promise;
 
       promise.then(function (data) {
+        //var arr = [];
+        //for(var i = 0; i < data.length; i++) arr.push(data[i]);
         deferred.resolve(data);
       }, function () {
         $log.error('couldn"t reach server to get the list of Questions');
@@ -86,25 +88,27 @@ app.factory('questionService', ['$log', 'endPointDefinitionService', '$resource'
       return deferred.promise;
     }
 
-    function updateQuestion(data){
+    function updateQuestion(data) {
       //console.log("Updating a Question");
+      console.log(data);
       var deferred = $q.defer();
 
-      if(data){
-        if (data instanceof Model.Question) {
+      if (data) {
 
-          var endPoint = endPointDefinitionService.updateQuestionUrl;
-          var resource = $resource(endPoint);
-          var promise = resource.save(data.toString()).$promise;
+        var endPoint = endPointDefinitionService.updateQuestionUrl;
+        var resource = $resource(endPoint, null, {
+          saveIt: {
+            method: 'POST',
+            isArray: true
+          }
+        });
+        var promise = resource.saveIt(data).$promise;
 
-          promise.then(function (data) {
-            deferred.resolve();
-          }, function (err) {
-            deferred.reject('couldn"t reach server to update the Question');
-          });
-        } else {
-          deferred.reject('object is not a question in updateQuestion');
-        }
+        promise.then(function (data) {
+          deferred.resolve(data);
+        }, function (err) {
+          deferred.reject('couldn"t reach server to update the Question');
+        });
       } else {
         deferred.reject('missing question object in updateQuestion');
       }

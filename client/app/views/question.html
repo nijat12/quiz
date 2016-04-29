@@ -1,11 +1,11 @@
-<div class="panel panel-danger" style="margin-top: 20px;" ng-controller="questionCtrl">
+<div class="panel panel-danger" style="margin-top: 20px;">
   <div class="panel-heading">
     <div class="input-group" style="width: 100%;">
           <textarea class="form-control"
                     placeholder="Question"
                     id="textarea"
                     name="textarea"
-                    ng-model="model.id"
+                    ng-model="model.label"
                     style="height: 200px;"></textarea>
     </div>
   </div>
@@ -17,12 +17,12 @@
       <div class="btn-group" role="group" ng-model="mainSelect">
         <button type="button" class="btn btn-default dropdown-toggle"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{mainSelect}}
+          {{model.answer ? 'Normal' : 'Abnormal'}}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <li ng-click="mainSelect='Normal'"><a>Normal</a></li>
-          <li ng-click="mainSelect='Abnormal'"><a>Abnormal</a></li>
+          <li ng-click="model.answer=true"><a>Normal</a></li>
+          <li ng-click="model.answer=false"><a>Abnormal</a></li>
         </ul>
       </div>
     </ul>
@@ -36,7 +36,7 @@
 
 
     <!--Multipple Choice-->
-    <div class="col-lg-12" ng-show="mainSelect==='Abnormal'">
+    <div class="col-lg-12" ng-show="model.answer===false">
       <hr>
 
       <div class="col-lg-12">
@@ -45,66 +45,48 @@
                         placeholder="Answer"
                         id="answer"
                         name="answer"
-                        ng-model="answer"
+                        ng-model="model.explanations[0].label"
                         style="height: 200px;"></textarea>
         </div>
       </div>
 
-      <div class="col-lg-12" style="margin-top: 20px; text-align: center;" ng-show="xray2>=1">
-        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" style="width: 200px; margin: auto;">
-        <button type="button"
-                class="btn btn-danger"
-                aria-label="Left Align"
-                style="position: absolute; top:10px; right:210px;"
-                ng-click="xray2=0">
-          X
-        </button>
+
+
+
+      <!-------------------------------------Images----------------------------------------->
+      <div class="col-lg-12" style="margin-top: 20px; text-align: center;">
+        <dic class="images-container" ng-if="currentCase.images.length>0">
+          <div class="row" ng-repeat="image in model.images" style="margin-top: 20px;">
+            <button type="button" class="btn btn-danger delete-btn"
+                    aria-label="Left Align" ng-click="deleteImageFromQuestion($parent.$index,$index)">
+              Delete
+            </button>
+
+            <img ng-src="{{image.accessUrl}}" class="img-rounded" alt="X-Ray" width="100%" height="100%">
+
+
+          </div>
+        </dic><hr>
       </div>
-      <div class="col-lg-12" style="margin-top: 20px; text-align: center;" ng-show="xray2>=2">
-        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" style="width: 200px; margin: auto;">
-        <button type="button"
-                class="btn btn-danger"
-                aria-label="Left Align"
-                style="position: absolute; top:10px; right:210px;"
-                ng-click="xray2=1">
-          X
-        </button>
+      <!---/////////////----------------------Images----------------------------------------->
+
+
+
+      <div class="col-lg-12" style="margin-top: 20px; text-align: center;">
+        <input type="file" name="file{{$index}}" id="file{{$index}}" class="inputfile"
+               ng-focus="imageOnFocus($index)"
+               ng-blur="removeClassToInput()"
+               ng-class="firefoxClass"
+               ng-model="myfile[$index]" multiple base-sixty-four-input
+               accept="image/x-png, image/jpeg"
+               ngf-max-height="10000"
+               maxsize="10000"
+               data-multiple-caption="{count} files selected" on-after-validate="uploadFilesToQuestion">
+        <label for="file{{$index}}"><i class="fa fa-upload"></i>  Add an image</label>
+        <!--<button type="button" class="btn btn-danger" ng-click="secondXrayToggle()">Add Image</button>-->
       </div>
 
-      <div class="col-lg-12" style="margin-top: 20px;">
-        <button type="button" class="btn btn-danger" ng-click="secondXrayToggle()">Add Image</button>
-      </div>
 
-      <!--<div class="col-lg-6">-->
-      <!--<ul>-->
-      <!--<div class="input-group">-->
-      <!--<input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">-->
-      <!--<span class="input-group-addon">-->
-      <!--<input type="radio">-->
-      <!--</span>-->
-      <!--</div>-->
-      <!--</ul>-->
-      <!--<ul>-->
-      <!--<div class="input-group">-->
-      <!--<input type="text" class="form-control" placeholder="Choice" aria-describedby="basic-addon1">-->
-      <!--<span class="input-group-addon">-->
-      <!--<input type="radio">-->
-      <!--</span>-->
-      <!--</div>-->
-      <!--</ul>-->
-
-
-      <!--<ul>-->
-      <!--<div class="btn-group" role="group" aria-label="">-->
-      <!--<button type="button" class="btn btn-primary">-->
-      <!--<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>-->
-      <!--</button>-->
-      <!--<button type="button" class="btn btn-danger" style="margin-left: 10px;">-->
-      <!--<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>-->
-      <!--</button>-->
-      <!--</div>-->
-      <!--</ul>-->
-      <!--</div>-->
     </div>
 
 

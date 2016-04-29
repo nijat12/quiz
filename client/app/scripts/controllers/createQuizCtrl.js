@@ -8,8 +8,15 @@
  * Controller of the quizApp
  */
 app
-  .controller('createQuizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q', 'questionService', 'loadIcon', '$rootScope',
-    function ($scope, $base64, s3Service, sessionService, $state, casesService, $q, questionService, loadIcon, $rootScope) {
+  .controller('createQuizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q', 'questionService', 'loadIcon', '$rootScope', 'tagsService',
+    function ($scope, $base64, s3Service, sessionService, $state, casesService, $q, questionService, loadIcon, $rootScope, tagsService) {
+
+      //
+      //
+      // Global
+      //
+      //
+
       $scope.test = sessionService.test;
       $scope.caseIndex = 0;
       $scope.currentCase = new Model.Case;
@@ -22,7 +29,16 @@ app
       $scope.tagsModel = [];
       $scope.tagsSettings = {displayProp: 'name', idProp: 'id', closeOnBlur: true};
 
-      /////Tags/////
+
+
+      //
+      //
+      //
+      // Tags
+      //
+      //
+      //
+
 
       var getTagsFormatted = function(){
         $scope.localTags = [];
@@ -73,7 +89,17 @@ app
       //);
 
 
-      ///////Cases///////
+
+
+      //
+      //
+      //
+      //
+      // Cases
+      //
+      //
+      //
+      //
       $scope.caseTitle = function (){
         if($scope.currentCase){
           if($scope.currentCase.getName() !== null && $scope.currentCase.getName() !== undefined && $scope.currentCase.getName() !== ''){
@@ -135,6 +161,12 @@ app
             backupCase = angular.copy(data);
             $scope.test.cases.push(data.getId());
             $scope.caseIndex = $scope.test.cases.length - 1;
+            getAllQuestions().then(function (data) {
+              $scope.questionsOnView = data;
+              questionsOriginal = angular.copy(data);
+            }, function (err) {
+              console.log(err);
+            })
           }
         },function(err){
           console.log(err);
@@ -223,20 +255,14 @@ app
 
 
 
-      /////////////////////Question Logic/////////////
-
-      ////Get a Question
-      //var getQuestion = function(id, position){
-      //  if(id !== ''){
-      //    questionService.get(id).then(function(data){
-      //      $scope.questionsOnView[position] = data;
-      //      questionsOriginal[position] = data;
-      //      console.log(data);
-      //    }, function (err){
-      //      console.log(err);
-      //    });
-      //  }
-      //};
+      //
+      //
+      //
+      //
+      // Question Logic
+      //
+      //
+      //
 
       //Get all Questions
       var getAllQuestions = function(){
@@ -270,25 +296,27 @@ app
       var checkIfQuestionSaved = function () {
         var deferred = $q.defer();
         var promises = [];
+        var send = [];
 
         for (var i = 0; i < $scope.questionsOnView.length; i++){
-          if($scope.questionsOnView[i] !== questionsOriginal[i]){
-
-            updateQuestions($scope.questionsOnView[i])
-              .then(function(data){
-                $scope.questionsOnView[i] = data;
-                questionsOriginal[i] = data;
-                deferred.resolve();
-                promises.push(deferred.promise);
-              }, function(err){
-                deferred.reject(err);
-                promises.push(deferred.promise);
-              });
+          if(_.isEqual($scope.questionsOnView[i], questionsOriginal[i])){
           } else {
-            deferred.resolve();
-            promises.push(deferred.promise);
+            send.push($scope.questionsOnView[i]);
           }
+        }
 
+        if(send.length > 0){
+          updateQuestions(send)
+            .then(function(){
+              deferred.resolve();
+              promises.push(deferred.promise);
+            }, function(err){
+              deferred.reject(err);
+              promises.push(deferred.promise);
+            });
+        } else {
+          deferred.resolve();
+          promises.push(deferred.promise);
         }
         return $q.all(promises);
       };
@@ -354,33 +382,102 @@ app
       };
 
 
-      //run it the first time to make sure everything is in order
-      var firstRun = function () {
-        //Test Sanity
-        if($scope.caseIndex === null || $scope.test.cases === undefined){
-          $state.go('header.tests');
-        } else {
-          if ($scope.test.cases.length !== 0 && $scope.test.cases[0] !== null && $scope.test.cases[0] !== '') {
-            getCase($scope.test.cases[0])
+
+      //
+      //
+      // Upload Images
+      //
+      //
+      $scope.myfile=[];
+
+      $scope.uploadFilesToCase = function (event, base64, files) {
+        if(base64 && base64.length > 0){
+          for(var i = 0; i< base64.length; i++){
+
+            loadIcon.show();
+            casesService.image(base64[i].base64,base64[i].filetype)
               .then(function(data){
-                $scope.currentCase = data;
-                backupCase = angular.copy(data);
-                getAllQuestions().then(function (data) {
-                  $scope.questionsOnView = data;
-                  questionsOriginal = angular.copy(data);
-
-                  getTagsFormatted();
-
-                }, function (err) {
-                  console.log(err);
-                });
+                loadIcon.hide();
+                $scope.currentCase.images.push(data);
+                checkIfSaved();
+                //console.log($scope.currentCase);
               },function(err){
+                loadIcon.hide();
               });
-          } else {
-            //New one has to be created
-            addCaseToArray();
           }
         }
+      };
+
+      $scope.deleteImageFromCase = function (index){
+        $scope.currentCase.images.splice(index,1);
+        checkIfSaved();
+      };
+
+
+      var iIndex = null;
+      $scope.imageOnFocus = function(index){
+        iIndex=index;
+        console.log(index);
+      };
+
+      $scope.uploadFilesToQuestion = function(event, base64, files){
+
+        var ind = iIndex;
+        //console.log(ind);
+
+        if(base64 && base64.length > 0){
+          for(var i = 0; i< base64.length; i++){
+
+            //console.log($scope.currentCase);
+
+            //
+            //console.log(base64[i]);
+            //console.log(ind);
+            //
+            //console.log($scope.questionsOnView[ind]);
+
+            loadIcon.show();
+            casesService.image(base64[i].base64,base64[i].filetype)
+              .then(function(data){
+                loadIcon.hide();
+                $scope.questionsOnView[ind].images.push(data);
+                $scope.saveAll();
+                //console.log($scope.currentCase);
+              },function(err){
+                loadIcon.hide();
+              });
+            iIndex = null;
+          }
+        }
+      };
+
+
+      $scope.deleteImageFromQuestion = function (parentIndex, index){
+        $scope.questionsOnView[parentIndex].images.splice(index,1);
+        checkIfSaved();
+      };
+
+
+
+
+
+
+
+      //
+      //
+      // General Code
+      //
+      //
+
+
+      //Save
+      $scope.saveAll = function () {
+        checkIfSaved().then(function(){
+            console.log("Saved");
+        },function(err){
+          console.log("Failed!");
+          console.log(err);
+        });
       };
 
       //Scroll to bottom
@@ -394,111 +491,55 @@ app
         //alert('Hey!');
       });
 
-      firstRun();
+
+      //Firefox Fix
+      $scope.firefoxClass = '';
+      $scope.addClassToInput = function(){$scope.firefoxClass = 'has-focus';};
+      $scope.removeClassToInput = function(){$scope.firefoxClass = '';};
 
 
 
+      //
+      //
+      //
+      // Init
+      //
+      //
+      //
 
 
+      //run it the first time to make sure everything is in order
+      var firstRun = function () {
+        //Test Sanity
+        if($scope.caseIndex === null || $scope.test.cases === undefined){
+          $state.go('header.tests');
+        } else {
+          if ($scope.test.cases.length !== 0 && $scope.test.cases[0] !== null && $scope.test.cases[0] !== '') {
+            getCase($scope.test.cases[0])
+              .then(function(data){
+                $scope.currentCase = data;
+                backupCase = angular.copy(data);
+                getAllQuestions().then(function (data) {
+                  //console.log($scope.currentCase);
+                  $scope.questionsOnView = data;
+                  questionsOriginal = angular.copy(data);
 
-      $scope.mainSelect = 'True';
-      $scope.mainSelect2 = 'True';
-      $scope.xray = 0;
-      $scope.xray2 = 0;
-      $scope.open = false;
-      var base64 = null;
-
-      $scope.xrayToggle = function(){
-        $scope.xray+=1;
-      };
-
-      $scope.secondXrayToggle = function(){
-        $scope.xray2+=1;
-      };
-
-      // Photo to Base64 converter
-      var base64Convert = function (image) {
-
-        var FR= new FileReader();
-        FR.onload = function(e) {
-          //el("img").src = e.target.result;
-          base64 = e.target.result.split(",");
-        };
-        FR.readAsDataURL( this.files[0] );
-
-      };
+                }, function (err) {
+                  console.log(err);
+                });
+              },function(err){
+              });
+          } else {
+            //New one has to be created
+            addCaseToArray();
+          }
 
 
-      // Photo to Base64 converter
-      function el(id){return document.getElementById(id);} // Get elem by ID
-
-      function readImage() {
-        if ( this.files && this.files[0] ) {
-          var FR= new FileReader();
-          FR.onload = function(e) {
-            //el("img").src = e.target.result;
-            base64 = e.target.result.split(",");
-          };
-          FR.readAsDataURL( this.files[0] );
+          getTagsFormatted();
         }
-      }
-
-      //el("cameraInput").addEventListener("change", readImage, false);
-
-
-      $scope.uploadFiles = function (files, errFiles) {
-        $scope.files = files;
-        $scope.errFiles = errFiles;
-        angular.forEach(files, function(file) {
-
-          var base64 = base64Convert(file);
-          //console.log(base64);
-
-          //base64 = base64.split(",");
-          //
-          //if (base64 != null){
-          //
-          //  //Geting image type
-          //  var type = "jpg";
-          //
-          //  if (base64[0].indexOf("image/png") > -1){type = "png";}
-          //
-          //  s3Service.saveFile('image_311_direct_', type, base64[1])
-          //    .then(function(mediaData){
-          //        $scope.sr.mediaUrl = mediaData.url;
-          //        $scope.sr.mediaFile = mediaData.key;
-          //
-          //        console.log($scope.sr.mediaUrl);
-          //        submitSRapi();
-          //      },
-          //      function(error){
-          //
-          //        alert('Error: Cannot send the Picture. Please try again')
-          //      });
-          //} else {
-          //  //do something
-          //}
-          //
-          //
-          //
-          //file.upload = Upload.upload({
-          //  url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-          //  data: {file: file}
-          //});
-          //
-          //file.upload.then(function (response) {
-          //  $timeout(function () {
-          //    file.result = response.data;
-          //  });
-          //}, function (response) {
-          //  if (response.status > 0)
-          //    $scope.errorMsg = response.status + ': ' + response.data;
-          //}, function (evt) {
-          //  file.progress = Math.min(100, parseInt(100.0 *
-          //    evt.loaded / evt.total));
-          //});
-        });
       };
+
+      firstRun();
     }
   ]
 );

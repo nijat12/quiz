@@ -39,7 +39,7 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
         var promise = resource.query().$promise;
 
         promise.then(function (data) {
-          console.log(data);
+          //console.log(data);
           var result = [];
           if(data && Object.prototype.toString.call(data) === '[object Array]')
             for(var i = 0; i < data.length; i++){
@@ -93,8 +93,6 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
       //console.log("Updating a Case");
       var deferred = $q.defer();
 
-      console.log(data);
-
       if(data){
         if (data instanceof Model.Case) {
 
@@ -117,12 +115,34 @@ app.factory('casesService', ['$log', '$q', 'endPointDefinitionService', '$resour
       return deferred.promise;
     }
 
+    function image (base64, type) {
+      var deferred = $q.defer();
+
+      if(base64 && type){
+        var endPoint = endPointDefinitionService.addImage;
+        var resource = $resource(endPoint);
+        var params = {"encoded64String": base64, "contentType": type};
+        var promise = resource.save(params).$promise;
+
+        promise.then(function (url) {
+          deferred.resolve(url);
+        }, function (err) {
+          deferred.reject('couldn"t reach server to upload Image');
+        });
+      } else {
+        deferred.reject('missing object in upload image');
+      }
+
+      return deferred.promise;
+    }
+
 
     return {
       get:getCase,
       getAll:getCases,
       add:addCase,
-      update:updateCase
+      update:updateCase,
+      image:image
     }
 
   }]);

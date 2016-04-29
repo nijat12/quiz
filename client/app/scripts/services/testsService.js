@@ -8,7 +8,7 @@ app.factory('testsService', ['$log', '$q', 'endPointDefinitionService', '$resour
     function getTests(){
       var deferred = $q.defer();
 
-      var endPoint = endPointDefinitionService.testURL;
+      var endPoint = endPointDefinitionService.quizURL;
       var resource = $resource(endPoint);
       var promise = resource.query().$promise;
 
@@ -35,7 +35,7 @@ app.factory('testsService', ['$log', '$q', 'endPointDefinitionService', '$resour
       if(test){
         if(test instanceof Model.Test){
 
-          var endPoint = endPointDefinitionService.testURL;
+          var endPoint = endPointDefinitionService.quizURL;
           var resource = $resource(endPoint);
           var promise = resource.save(test).$promise;
 

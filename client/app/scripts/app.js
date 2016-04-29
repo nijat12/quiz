@@ -18,10 +18,11 @@ var app = angular
     'ngTouch',
     'ui.router',
     'ngDialog',
-    'ngFileUpload',
     'base64',
     'angularSpinner',
-    'angularjs-dropdown-multiselect'
+    'angularjs-dropdown-multiselect',
+    'naif.base64',
+    'angularHideHeader'
   ])
 
   //.run(['$location', function($location){

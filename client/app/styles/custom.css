@@ -32,7 +32,21 @@ body {
     margin:10px 20px 10px 0px;
     background-color:#fff!important;
     padding:10px;
-    min-height:1200px;
+    /*min-height:1200px;*/
+}
+
+.custom-nav{
+  display: block;
+  margin-bottom: 0;
+  z-index: 10;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0 13px 12px -11px #777;
+  -webkit-transition: top 0.25s;
+  -moz-transition: top 0.25s;
+  -ms-transition: top 0.25s;
+  -o-transition: top 0.25s;
+  transition: top 0.25s;
 }
 
 .text-center {
@@ -64,6 +78,12 @@ p {
     =============================================*/
 .panel-back {
     background-color:#F8F8F8;
+
+}
+
+.panel-shadow {
+  -webkit-box-shadow: 4px 4px 8px #888!important;
+  bow-shadow: 4px 4px 8px #888!important;
 
 }
    .noti-box {
@@ -207,13 +227,30 @@ max-width:170px;
 
 .navbar-cls-top .navbar-brand {
 	color: #fff;
-background: #C90000;
 width: 260px;
 text-align: center;
 height: 60px;
 font-size: 30px;
 font-weight: 700;
 }
+
+.navbar-brand-side{
+  height: 50px;
+  /*padding: 15px 15px;*/
+  font-size: 18px;
+  line-height: 20px;
+  float:none;
+}
+
+.black-text{
+  color: black;
+}
+
+.transparent{
+  background-color: #fff;
+  border-bottom: 1px #ddd solid !important;
+}
+
 .active-menu {
     background-color:#C90000!important;
 }
@@ -305,15 +342,25 @@ font-weight: 700;
 
 }
 .navbar-cls-top {
-	background:#4D4D4D;
+	/*background:#4D4D4D;*/
 	border-bottom:none;
 
 }
 .navbar-cls-top .navbar-brand:hover {
+  background: #ddd;
+  color: #fff;
+}
 
-background: #C90000;
-color:#fff;
+.navbar-nav {
+  margin:7.5px 5px;
+}
 
+.nav-btn {
+  height: 100%;
+}
+
+.nav-btn:hover {
+  background: #ddd!important;
 }
 
 .navbar-default {
@@ -321,13 +368,13 @@ border:0px solid black;
 
 }
 .navbar-header {
-    background: #C90000;
+    /*background: #4D4D4D;*/
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-background-color: #B40101;
+background-color: #4D4D4D;
 }
 .navbar-default .navbar-toggle {
-border-color: #fff;
+border-color: #FFF;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
@@ -371,8 +418,8 @@ line-height: 1.428571429;
     }
 
    .navbar {
- border-radius: 0px;
-}
+     border-radius: 0px;
+   }
 
 }
 
@@ -438,4 +485,20 @@ line-height: 1.428571429;
   border-top: 0px;
   border-left: 0px;
   border-right: 0px;
+}
+
+.delete-btn {
+  position: absolute;
+}
+
+.side-hamburger {
+  position: absolute;
+  padding: 15px 0;
+  width:197px;
+  text-align: left;
+}
+
+.open-hamburger {
+  padding: 15px 15px 15px 70px!important;
+  border: solid 1px #777;
 }
