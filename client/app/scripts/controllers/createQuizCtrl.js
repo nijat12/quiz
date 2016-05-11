@@ -18,14 +18,12 @@ app
       //
 
       $scope.test = sessionService.test;
+      $scope.allCases = null;
       $scope.caseIndex = 0;
       $scope.currentCase = new Model.Case;
       var backupCase = new Model.Case;
       $scope.questionsOnView = [];
       var questionsOriginal = [];
-
-
-
 
 
       //
@@ -134,9 +132,10 @@ app
       };
 
       //Getting all Cases
-      var getAllCases = function(id) {
-        casesService.getAll(id).then(function(data){
+      var getAllCases = function() {
+        casesService.getAll($scope.test.id).then(function(data){
           console.log(data);
+          $scope.allCases = data;
         },function(err){
           console.log(err);
         });
@@ -204,6 +203,7 @@ app
             updateCase($scope.currentCase)
               .then(function(data){
                 backupCase = angular.copy(data);
+                getAllCases();
                 deff.resolve();
               },function(err){
                 deff.reject(err);
@@ -524,6 +524,7 @@ app
               .then(function(data){
                 $scope.currentCase = data;
                 backupCase = angular.copy(data);
+                getAllCases();
                 getAllQuestions().then(function (data) {
                   //console.log($scope.currentCase);
                   $scope.questionsOnView = data;

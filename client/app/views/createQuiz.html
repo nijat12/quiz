@@ -67,8 +67,18 @@
     </li>
     <li ng-repeat="case in test.cases">
       <button class="nav-button" ng-click="changeCase($index)">{{$index + 1}}
-        <!--<img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 84px;">-->
-        <img src="./images/x-ray1.jpg" class="img-rounded" alt="X-Ray" width="30%" height="30%" style="margin-left: 84px;">
+        <img ng-if="!allCases[$index].images[0].accessUrl"
+             src="./images/placeholder.png" class="img-rounded"
+             alt="X-Ray"
+             width="90px"
+             height="50px"
+             style="margin-left: 50px;">
+        <img ng-if="allCases[$index].images[0].accessUrl"
+             ng-src="{{allCases[$index].images[0].accessUrl}}"
+             class="img-rounded"
+             width="90px"
+             height="50px"
+             style="margin-left: 50px;">
       </button>
     </li>
     <li>
