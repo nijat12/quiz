@@ -401,8 +401,21 @@ line-height: 1.428571429;
 /*==============================================
     MEDIA QUERIES
     =============================================*/
+@media(max-width:1200px){
+
+  .vertical-line{
+    display: none;
+  }
+}
+
+@media(max-width:768px) {
+  .navbar {
+    height: 66px;
+  }
+}
 
  @media(min-width:768px) {
+
      #page-wrapper{
                margin: 0 0 0 260px;
         padding: 15px 30px;
@@ -424,6 +437,7 @@ line-height: 1.428571429;
 }
 
 /*Nijat's edits'*/
+
 .full-width {
   width: 100%;
 }
@@ -501,4 +515,64 @@ line-height: 1.428571429;
 .open-hamburger {
   padding: 15px 15px 15px 70px!important;
   border: solid 1px #777;
+}
+
+/*Loader*/
+.us-spinner-wrapper {
+  position: fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  overflow:hidden;
+  background: none;
+  transition: background 0.1s ease;
+  pointer-events: none;
+}
+
+.us-spinner-wrapper.loading {
+  z-index: 10;
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+
+/*Image Selectors*/
+.sel-container {
+  border:1px solid #ddd;
+  padding: 0;
+}
+
+.sel-title-container {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0 5px 0;
+}
+
+.sel-image-container {
+  display: inline-block;
+  width: 100%;
+  height: 150px;
+  text-align: center;
+  padding: 5px 0 5px 0;
+}
+
+.sel-image {
+  height: 100%;
+  max-width: 100%;
+}
+
+
+.sel-checkbox-container {
+  border-top:1px solid #ddd;
+  display: inline-block;
+  height:20%;
+}
+
+.sel-checkbox {
+  position: absolute!important;
+  top: 50%;
+  left:50px;
+  margin: -6px 0 0 -6px!important;
 }

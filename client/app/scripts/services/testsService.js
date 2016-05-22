@@ -28,6 +28,32 @@ app.factory('testsService', ['$log', '$q', 'endPointDefinitionService', '$resour
       return deferred.promise;
     }
 
+    function getCasesByTag(tag) {
+      //console.log("Updating a Case");
+      var deferred = $q.defer();
+
+      if (tag) {
+        //if (data instanceof Model.Case) {
+
+        var endPoint = endPointDefinitionService.getCasesFromTagURL;
+        var resource = $resource(endPoint);
+        var params = {tag: tag};
+        var promise = resource.query(params).$promise;
+
+        promise.then(function (data) {
+          deferred.resolve(data);
+        }, function (err) {
+          deferred.reject('couldn"t reach server to update the Case');
+        });
+        //} else {
+        //  deferred.reject('object is not a case in updateCase');
+        //}
+      } else {
+        deferred.reject('missing tag object in getCasesByTag');
+      }
+
+      return deferred.promise;
+    }
 
     function createTest(test){
       var deferred = $q.defer();
@@ -89,6 +115,7 @@ app.factory('testsService', ['$log', '$q', 'endPointDefinitionService', '$resour
 
     return {
       getAll:getTests,
+      getCasesByTag:getCasesByTag,
       createTest:createTest,
       delete:deleteTest
     }

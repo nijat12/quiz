@@ -19,9 +19,10 @@ app.service('endPointDefinitionService' ,[function () {
   this.getCasesURL = this.quizURL + '/:id/cases';
   this.getQuestionUrl = this.quizURL + '/cases/questions/:id';
   this.getQuestionsUrl = this.quizURL + '/cases/:id/questions';
+  this.getCasesFromTagURL = this.quizURL + '/cases?tag=:tag';
 
   //update endpoints
-  this.updateCaseURL = this.quizURL + '/cases';
+  this.updateCaseURL = this.quizURL + '/cases'; //Also for getting cases that match a tag Param
   this.updateQuestionUrl = this.quizURL + '/cases/questions/update';
 
   //add endpoints

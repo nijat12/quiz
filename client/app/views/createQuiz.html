@@ -96,6 +96,12 @@
 
   <div class="col-lg-4">
 
+
+    <div>
+      <h1 style="text-align: center;">{{caseTitle()}}</h1>
+      <hr>
+    </div>
+
     <form class="form-horizontal" style="margin-top: 20px;">
       <fieldset>
 
@@ -187,7 +193,6 @@
   <!-------------------Vertical Line-->
 
   <div class="col-lg-7">
-    <h1 style="text-align: center;">{{caseTitle()}}</h1><hr>
 
     <div ng-repeat="model in questionsOnView track by $index">
       <span ng-include="'views/question.html'">
@@ -195,12 +200,14 @@
       </span>
     </div>
 
-    <button type="button"
-            class="btn btn-danger square-btn-adjust"
-            ng-click="addQuestion()"
-            style="float: right; margin-bottom: 20px;">
-      Add a Question
-    </button>
+    <div class="col-lg-12" style="padding: 0; min-height: 30px;">
+      <button type="button"
+              class="btn btn-danger square-btn-adjust"
+              ng-click="addQuestion()"
+              style="float: right;">
+        Add a Question
+      </button>
+    </div>
 
     <!--Button Grid-->
 
