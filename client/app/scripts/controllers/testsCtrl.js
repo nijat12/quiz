@@ -27,7 +27,7 @@ app
           testsService.getAll().then(function(data){
             $scope.tests = null;
             $scope.tests = data;
-            console.log($scope.tests);
+            //console.log($scope.tests);
             //getTags().then(function(){
               loadIcon.hide();
             //},function(){
@@ -58,7 +58,7 @@ app
               //Open another modal to pick Cases with these Tags
               $scope.closeModal();
               testsService.getCasesByTag($scope.selectedTag).then(function (data) {
-                console.log(data);
+                //console.log(data);
                 $scope.matchingCases = data;
                 openModal2();
               }, function (err) {
@@ -85,7 +85,7 @@ app
         var createTest = function () {
           testsService.createTest($scope.newTest).then(function (data) {
             sessionService.test = data;
-            console.log(sessionService.test);
+            //console.log(sessionService.test);
             $('#myModal').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
@@ -100,10 +100,15 @@ app
           $state.go('header.createQuiz');
         };
 
+        $scope.take = function (index) {
+          sessionService.test = $scope.tests[index];
+          $state.go('header.takeTest');
+        };
+
         $scope.deleteTest = function (index) {
           testsService.delete($scope.tests[index].id)
             .then(function(data){
-              console.log(data);
+              //console.log(data);
               alert('deleted');
               getTests();
             },function(err){

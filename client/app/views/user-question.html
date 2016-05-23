@@ -1,0 +1,44 @@
+<div class="panel panel-danger" style="margin-top: 20px;">
+  <div class="panel-heading">
+    <h4 class="auto-margin">{{model.label}}</h4>
+  </div>
+
+  <div class="panel-body">
+
+
+    <ul style="margin-bottom: 0px;">
+      <div class="btn-group" role="group" ng-model="mainSelect">
+        <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{model.answer ? 'Normal' : 'Abnormal'}}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-click="model.answer=true"><a>Normal</a></li>
+          <li ng-click="model.answer=false"><a>Abnormal</a></li>
+        </ul>
+      </div>
+    </ul>
+
+
+    <!--Multipple Choice-->
+    <div class="col-lg-12" ng-show="model.answer===false">
+      <hr>
+
+      <div class="col-lg-12">
+        <div class="input-group" style="width: 100%;">
+              <textarea class="form-control"
+                        placeholder="Answer"
+                        id="answer"
+                        name="answer"
+                        ng-model=""
+                        style="height: 200px;"></textarea>
+
+          <div>Word Count: <span ng-bind="countOf(myText)"></span>/1500</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

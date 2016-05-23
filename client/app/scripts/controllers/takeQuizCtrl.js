@@ -13,4 +13,6 @@ app
       var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
       return s ? s.length : '';
     };
+
+
   });

@@ -169,7 +169,7 @@
                   <td>{{test.status}}</td>
                   <td>{{test.cases.length}}</td>
                   <td>
-                    <a href="#/test" ng-if="user.roles[0] === 'user' && test.status === 'Active'"
+                    <a ng-click="take($index)" ng-if="user.roles[0] === 'user' && test.status === 'Active'"
                        class="btn btn-middle btn-danger btn-lg">Take the Quiz!</a>
                     <a ng-click="edit($index)" ng-if="user.roles[0] === 'admin' && test.status === 'Active'"
                        class="btn btn-success btn-lg">Edit</a>

@@ -26,9 +26,9 @@ var app = angular
     'ngTagsInput'
   ])
 
-  //.run(['$location', function($location){
-  //  $location.path("/login");
-  //}])
+  .run(['$location', function($location){
+    $location.path("/login");
+  }])
 
   .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -40,9 +40,6 @@ var app = angular
       document:            false,                   // we only care about XHR loads...
       restartOnPushState:  false                    // we only care about XHR requests...
     };
-
-    // For any unmatched url, redirect to /state1
-    $urlRouterProvider.otherwise('/');
 
     $stateProvider
       .state('header', {
@@ -57,7 +54,7 @@ var app = angular
       .state('header.createQuiz', {
         url:'/create',
         templateUrl: 'views/createQuiz.html',
-        controller: 'createQuizCtrl'
+        controller: 'quizCtrl'
       })
       .state('header.tests', {
         url:'/view/tests',
@@ -77,6 +74,12 @@ var app = angular
       .state('header.takeTest', {
         url:'/test',
         templateUrl: 'views/takeQuiz.html',
-        controller: 'takeQuizCtrl'
+        controller: 'quizCtrl'
       });
+
+    $urlRouterProvider.otherwise(function($injector, $location){
+      var state = $injector.get('$state');
+      state.go("header.login", $location.search()); // here we get { query: ... }
+      //return $location.path();
+    });
   });

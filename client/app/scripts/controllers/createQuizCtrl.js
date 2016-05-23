@@ -8,7 +8,7 @@
  * Controller of the quizApp
  */
 app
-  .controller('createQuizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q', 'questionService', 'loadIcon', '$rootScope', 'tagsService',
+  .controller('quizCtrl',['$scope', '$base64', 's3Service', 'sessionService', '$state', 'casesService', '$q', 'questionService', 'loadIcon', '$rootScope', 'tagsService',
     function ($scope, $base64, s3Service, sessionService, $state, casesService, $q, questionService, loadIcon, $rootScope, tagsService) {
 
       //
@@ -73,7 +73,7 @@ app
       //Getting all Cases
       var getAllCases = function() {
         casesService.getAll($scope.test.id).then(function(data){
-          console.log(data);
+          //console.log(data);
           $scope.allCases = data;
         },function(err){
           console.log(err);
@@ -301,7 +301,7 @@ app
       var saveQuestion = function (data) {
         var def = $q.defer();
 
-        console.log(data);
+        //console.log(data);
 
         if (data) {
           loadIcon.show();
@@ -356,7 +356,7 @@ app
       var iIndex = null;
       $scope.imageOnFocus = function(index){
         iIndex=index;
-        console.log(index);
+        //console.log(index);
       };
 
       $scope.uploadFilesToQuestion = function(event, base64, files){
@@ -408,6 +408,11 @@ app
       //
       //
 
+      //The word count of a text
+      $scope.countOf = function(text) {
+        var s = text ? text.split(/\s+/) : 0; // it splits the text on space/tab/enter
+        return s ? s.length : '';
+      };
 
       //Save
       $scope.saveAll = function () {
@@ -417,6 +422,13 @@ app
           console.log("Failed!");
           console.log(err);
         });
+      };
+
+      //Next Case view
+      $scope.nextCase = function () {
+        console.log($scope.test);
+        console.log($scope.caseIndex);
+        $scope.changeCase($scope.caseIndex + 1);
       };
 
       // Getting Images for sidebar
